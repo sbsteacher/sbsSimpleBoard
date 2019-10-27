@@ -14,6 +14,8 @@ public class BoardDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		BoardVo vo = SBDao.getBoardDetail(0);
+		
 		request.getRequestDispatcher("WEB-INF/jsp/detail.jsp").forward(request, response);
 	}	
 
