@@ -22,6 +22,14 @@ public class SBDao {
         return con;
 	}
 	
+	private static void close(Connection con, PreparedStatement ps, ResultSet rs) {
+		if(rs != null) {
+			try { rs.close(); }
+			catch (SQLException e) { e.printStackTrace(); }
+		}		
+		close(con, ps);
+	}
+	
 	private static void close(Connection con, PreparedStatement ps) {
 		if(ps != null) {
 			try { ps.close(); }
@@ -63,7 +71,7 @@ public class SBDao {
 	public static List<BoardVo> getBoardList() {
 		List<BoardVo> list = new ArrayList();
 		
-		String query = " SELECT * FROM t_board ";
+		String query = " SELECT i_board, title, regdatetime FROM t_board ";
 		
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -75,19 +83,49 @@ public class SBDao {
 			rs = ps.executeQuery();
 			while(rs.next()) {
 				int i_board = rs.getInt("i_board");
-				String title = rs.getString("title");
-				String content = rs.getString("content");
+				String title = rs.getString("title");				
 				String regDateTime = rs.getString("regdatetime");
 				
-				BoardVo vo = new BoardVo(i_board, title, content, regDateTime);
+				BoardVo vo = new BoardVo(i_board, title, "", regDateTime);
 				list.add(vo);
 			}
 			
 		} catch (Exception e) {			
 			e.printStackTrace();
+		} finally {
+			close(con, ps, rs);
 		}
 		
 		return list;
+	}
+	
+	//글 디테일 가져오기
+	public static BoardVo getBoardDetail(int i_board) {
+		BoardVo vo = null;
+		String query = " SELECT * FROM t_board WHERE i_board = 5 ";
+				
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			con = getCon();
+			ps = con.prepareStatement(query);
+			ps.setInt(1, i_board);
+			rs = ps.executeQuery();
+			if(rs.next()) {				
+				String title = rs.getString("title");
+				String content = rs.getString("content");
+				String regDateTime = rs.getString("regdatetime");				
+				vo = new BoardVo(i_board, title, content, regDateTime);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(con, ps, rs);
+		}
+		
+		return vo;
 	}
 }
 

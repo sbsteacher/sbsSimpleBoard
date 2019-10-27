@@ -29,6 +29,11 @@
 			<td>안녕하세요</td>
 			<td>2019-10-27</td>
 		</tr>
+		<tr>
+			<td>2</td>
+			<td>Hello</td>
+			<td>2019-9-27</td>
+		</tr>
 	<% for(BoardVo vo : data) { %>
 		<tr>
 			<td><%=vo.getI_board() %></td>
