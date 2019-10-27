@@ -1,6 +1,7 @@
 package com.doheum.sb;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,6 +16,10 @@ public class BoardListServlet extends HttpServlet {
   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("list!!!");
+		
+		List<BoardVo> list = SBDao.getBoardList();
+		request.setAttribute("data", list);		
+		
 		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/jsp/list.jsp");
 		rd.forward(request, response);
 	}
