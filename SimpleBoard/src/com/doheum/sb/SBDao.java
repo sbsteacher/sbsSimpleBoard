@@ -102,7 +102,7 @@ public class SBDao {
 	//글 디테일 가져오기
 	public static BoardVo getBoardDetail(int i_board) {
 		BoardVo vo = null;
-		String query = " SELECT * FROM t_board WHERE i_board = 5 ";
+		String query = " SELECT * FROM t_board WHERE i_board = ? ";
 				
 		Connection con = null;
 		PreparedStatement ps = null;
