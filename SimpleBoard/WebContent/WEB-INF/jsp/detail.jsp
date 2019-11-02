@@ -19,6 +19,7 @@
 	<div>날짜: <%=vo.getRegDateTime() %></div>
 	<div>내용: <%=vo.getContent() %></div>
 	<div><a href="del?i_board=<%=vo.getI_board() %>">삭제</a></div>
+	<div><a href="mod?i_board=<%=vo.getI_board() %>">수정</a></div>
 	
 	<% if(msg != null) { %>
 	<div><%=msg %></div>

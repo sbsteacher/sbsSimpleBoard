@@ -2,11 +2,13 @@ package com.doheum.sb;
 
 public class Utils {
 	
-	public static int parseStringToInt(String v) {	
+	public static int parseStringToInt(String v) {
+		int result = 0;
 		try {
-			return Integer.parseInt(v);
+			result = Integer.parseInt(v);
 		}catch(Exception e) {
-			return 0;
+			result = 0;
 		}
+		return result;
 	}
 }
