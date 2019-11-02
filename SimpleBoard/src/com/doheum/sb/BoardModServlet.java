@@ -33,9 +33,7 @@ public class BoardModServlet extends HttpServlet {
 		String content = request.getParameter("content");
 		
 		BoardVo vo = new BoardVo(i_board, title, content);
-		//int result = SBDao.modBoard(vo);
-		
-		int result = 0;
+		int result = SBDao.modBoard(vo);
 		
 		if(result == 0) { //수정 실패 (수정 화면으로 이동)
 			request.setAttribute("vo", vo);
