@@ -24,16 +24,6 @@
 			<th>제목</th>
 			<th>날짜</th>
 		</tr>
-		<tr>
-			<td>1</td>
-			<td><a href="detail?i_board=1">안녕하세요</a></td>
-			<td>2019-10-27</td>
-		</tr>
-		<tr>
-			<td>2</td>
-			<td><a href="detail?i_board=2">Hello</a></td>
-			<td>2019-9-27</td>
-		</tr>
 		<% if(data != null) { %>
 			<% for(BoardVo vo : data) { %>
 				<tr>

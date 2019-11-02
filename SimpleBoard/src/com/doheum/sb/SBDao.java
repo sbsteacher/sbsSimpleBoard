@@ -13,8 +13,8 @@ public class SBDao {
 		}
 	}
 	private static Connection getCon() throws Exception {
-		final String URL = "jdbc:mysql://localhost:3306/jsp?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC";
-		final String USER = "root";
+		final String URL = "jdbc:mysql://192.168.1.4:3306/jsp2?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC";
+		final String USER = "teacher";
 		final String PW = "1234";
 		Class.forName("com.mysql.cj.jdbc.Driver");
         Connection con = DriverManager.getConnection(URL, USER, PW);

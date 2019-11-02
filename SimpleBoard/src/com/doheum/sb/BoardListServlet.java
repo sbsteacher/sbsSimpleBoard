@@ -16,12 +16,9 @@ public class BoardListServlet extends HttpServlet {
   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("list!!!");
-		
-		//여러분들은 주석처리 할 필요 없음!!
-		/* 
+		 
 		List<BoardVo> list = SBDao.getBoardList();
 		request.setAttribute("data", list);		
-		*/
 		
 		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/jsp/list.jsp");
 		rd.forward(request, response);

@@ -33,7 +33,7 @@ public class BoardWriteServlet extends HttpServlet {
 		
 		BoardVo vo = new BoardVo(title, content);
 		
-		//int result = SBDao.insertBoard(vo); //여러분들은 주석처리 할 필요 없음!!
+		int result = SBDao.insertBoard(vo); //여러분들은 주석처리 할 필요 없음!!
 		response.sendRedirect("list");
 	}
 
