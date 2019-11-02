@@ -12,11 +12,12 @@ public class BoardDelServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String str = request.getParameter("i_board"); // "3"
+		String str = request.getParameter("i_board"); // "3aa"
 		
 		int i_board = Utils.parseStringToInt(str); //3
 		if(i_board == 0) { 
 			//예외처리 나중에
+			response.sendRedirect("list");
 			return;
 		}
 		
@@ -24,6 +25,7 @@ public class BoardDelServlet extends HttpServlet {
 		
 		if(result == 0) {
 			//예외처리 나중에
+			response.sendRedirect("detail?err=1&i_board=" + str);
 			return;
 		}
 		//삭제처리

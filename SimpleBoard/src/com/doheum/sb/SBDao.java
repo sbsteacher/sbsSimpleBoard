@@ -145,7 +145,6 @@ public class SBDao {
 		} catch (Exception e) {		
 			e.printStackTrace();
 			
-			
 		} finally {
 			close(con, ps);
 		}
