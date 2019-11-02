@@ -134,7 +134,7 @@ public class SBDao {
 		Connection con = null;
 		PreparedStatement ps = null;
 		
-		String query = " DELETE FROM t_board WHERE i_board = 4 ";
+		String query = " DELETE FROM t_board WHERE i_board = ? ";
 		
 		try {
 			con = getCon();
