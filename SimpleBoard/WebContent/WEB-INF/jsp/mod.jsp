@@ -4,7 +4,6 @@
 <%
 	BoardVo vo = (BoardVo)request.getAttribute("vo");	
 %>    
-    
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +13,7 @@
 <body>
 	<h1>수정 화면</h1>
 	<form action="mod" method="post">
-		<input type="text" name="i_board" value="<%=vo.getI_board()%>">
+		<input type="hidden" name="i_board" value="<%=vo.getI_board()%>">
 		<div>
 			제목 : <input type="text" name="title" value="<%=vo.getTitle()%>"> 
 		</div>

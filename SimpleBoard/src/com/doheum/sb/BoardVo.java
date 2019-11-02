@@ -7,8 +7,11 @@ public class BoardVo {
 	private String regDateTime;
 	
 	public BoardVo(String title, String content) {
-		this.title = title;
-		this.content = content;
+		this(0, title, content, null);
+	}
+	
+	public BoardVo(int i_board, String title, String content) {
+		this(i_board, title, content, null);
 	}
 	
 	public BoardVo(int i_board, String title, String content, String regDateTime) {	

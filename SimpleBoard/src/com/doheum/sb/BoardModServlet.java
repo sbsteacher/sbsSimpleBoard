@@ -24,7 +24,20 @@ public class BoardModServlet extends HttpServlet {
 
 	//수정하기
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String str_board = request.getParameter("i_board");
+		int i_board = Utils.parseStringToInt(str_board);
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
 		
+		BoardVo vo = new BoardVo(i_board, title, content);
 	}
 
 }
+
+
+
+
+
+
+
+
