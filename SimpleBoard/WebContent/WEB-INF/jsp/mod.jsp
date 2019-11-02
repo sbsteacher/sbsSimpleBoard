@@ -2,7 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.doheum.sb.*" %>
 <%
-	BoardVo vo = (BoardVo)request.getAttribute("vo");	
+	BoardVo vo = (BoardVo)request.getAttribute("vo");
+	String msg = (String)request.getAttribute("msg");
 %>    
 <!DOCTYPE html>
 <html>
@@ -12,6 +13,9 @@
 </head>
 <body>
 	<h1>수정 화면</h1>
+	<% if(msg != null) { %>
+		<div><%=msg %></div>
+	<% } %>
 	<form action="mod" method="post">
 		<input type="hidden" name="i_board" value="<%=vo.getI_board()%>">
 		<div>
