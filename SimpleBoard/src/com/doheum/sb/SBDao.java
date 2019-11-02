@@ -127,6 +127,32 @@ public class SBDao {
 		
 		return vo;
 	}
+	
+	public static int delBoard(int i_board) {
+		int result = 0; //디폴트 삭제 못 했다
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		String query = " DELETE FROM t_board WHERE i_board = 4 ";
+		
+		try {
+			con = getCon();
+			ps = con.prepareStatement(query);
+			ps.setInt(1, i_board);
+			result = ps.executeUpdate();
+			
+		} catch (Exception e) {		
+			e.printStackTrace();
+			
+			
+		} finally {
+			close(con, ps);
+		}
+		//로직처리, 삭제가 잘 됐다면 result = 1;
+		
+		return result;
+	}
 }
 
 
