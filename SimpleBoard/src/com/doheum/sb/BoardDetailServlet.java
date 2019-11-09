@@ -19,15 +19,18 @@ public class BoardDetailServlet extends HttpServlet {
 		
 		System.out.println("err : " + err);
 		
+		int i_board = Integer.parseInt(str_board);
+		
 		if(err != null) {
 			switch(err) {
 			case "1":
 				request.setAttribute("msg", "삭제 오류가 발생하였습니다.");
 				break;
 			}
-		}	
-		
-		int i_board = Integer.parseInt(str_board);
+		} else { //err 이 null인 경우만 cnt 값을 올려준다.
+			SBDao.plusCnt(i_board);
+		}
+				
 		BoardVo vo = SBDao.getBoardDetail(i_board);
 		request.setAttribute("vo", vo);
 		

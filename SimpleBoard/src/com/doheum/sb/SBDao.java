@@ -82,9 +82,7 @@ public class SBDao {
 			con = getCon();
 			ps = con.prepareStatement(query);
 			rs = ps.executeQuery();
-			
-			
-			
+						
 			while (rs.next()) {
 				BoardVo vo = new BoardVo();
 				int i_board = rs.getInt("i_board");
@@ -198,4 +196,42 @@ public class SBDao {
 
 		return result;
 	}
+	
+	public static void plusCnt(int i_board) {
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		String sql = " UPDATE t_board SET cnt = cnt + 1 "
+				   + " WHERE i_board = ? ";
+		
+		try {
+			con = getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, i_board);
+			
+			ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(con, ps);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
