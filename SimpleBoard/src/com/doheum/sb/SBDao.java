@@ -4,18 +4,12 @@ import java.sql.*;
 import java.util.*;
 
 public class SBDao {
-	public static void main(String[] args) {
-		try {
-			getCon();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
+	
 	private static Connection getCon() throws Exception {
+		//URL = "jdbc:mysql://localhost:3306/jsp?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC";
+		
 		final String URL = "jdbc:mysql://192.168.1.4:3306/jsp2?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC";
-		final String USER = "teacher";
+		final String USER = "teacher"; //root
 		final String PW = "1234";
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection con = DriverManager.getConnection(URL, USER, PW);
@@ -77,23 +71,32 @@ public class SBDao {
 	// 글 리스트 가져오기
 	public static List<BoardVo> getBoardList() {
 		List<BoardVo> list = new ArrayList();
-
-		String query = " SELECT i_board, title, regdatetime FROM t_board ";
+		
+		String query = " SELECT i_board, title, regdatetime, cnt FROM t_board ";
 
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-
+		
 		try {
 			con = getCon();
 			ps = con.prepareStatement(query);
 			rs = ps.executeQuery();
+			
+			
+			
 			while (rs.next()) {
+				BoardVo vo = new BoardVo();
 				int i_board = rs.getInt("i_board");
 				String title = rs.getString("title");
 				String regDateTime = rs.getString("regdatetime");
-
-				BoardVo vo = new BoardVo(i_board, title, "", regDateTime);
+				int cnt = rs.getInt("cnt");
+				
+				vo.setI_board(i_board);
+				vo.setTitle(title);
+				vo.setRegDateTime(regDateTime);
+				vo.setCnt(cnt);
+				
 				list.add(vo);
 			}
 
@@ -108,7 +111,7 @@ public class SBDao {
 
 	// 글 디테일 가져오기
 	public static BoardVo getBoardDetail(int i_board) {
-		BoardVo vo = null;
+		BoardVo vo = new BoardVo();
 		String query = " SELECT * FROM t_board WHERE i_board = ? ";
 
 		Connection con = null;
@@ -120,11 +123,17 @@ public class SBDao {
 			ps = con.prepareStatement(query);
 			ps.setInt(1, i_board);
 			rs = ps.executeQuery();
-			if (rs.next()) {
+			while(rs.next()) {
 				String title = rs.getString("title");
 				String content = rs.getString("content");
 				String regDateTime = rs.getString("regdatetime");
-				vo = new BoardVo(i_board, title, content, regDateTime);
+				int cnt = rs.getInt("cnt");
+				
+				vo.setI_board(i_board);
+				vo.setTitle(title);
+				vo.setContent(content);
+				vo.setRegDateTime(regDateTime);
+				vo.setCnt(cnt);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

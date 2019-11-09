@@ -5,6 +5,9 @@ public class BoardVo {
 	private String title;
 	private String content;
 	private String regDateTime;
+	private int cnt;
+	
+	public BoardVo() {}
 	
 	public BoardVo(String title, String content) {
 		this(0, title, content, null);
@@ -19,6 +22,15 @@ public class BoardVo {
 		this.title = title;
 		this.content = content;
 		this.regDateTime = regDateTime;
+	}
+	
+	public BoardVo(int i_board, String title, String content, String regDateTime, int cnt) {
+		super();
+		this.i_board = i_board;
+		this.title = title;
+		this.content = content;
+		this.regDateTime = regDateTime;
+		this.cnt = cnt;
 	}
 
 	public int getI_board() {
@@ -49,6 +61,15 @@ public class BoardVo {
 	public void setRegDateTime(String regDateTime) {
 		this.regDateTime = regDateTime;
 	}
+
+	public int getCnt() {
+		return cnt;
+	}
+
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+	
 }
 
 
