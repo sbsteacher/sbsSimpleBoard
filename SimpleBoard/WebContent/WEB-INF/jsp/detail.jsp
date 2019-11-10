@@ -69,6 +69,26 @@
 			</div>
 		</form>
 	</div>
+	
+	<% if(cmtList != null) { %>
+	<div>
+		<table>
+			<tr>
+				<th>번호</th>
+				<th>댓글</th>
+				<th>등록일시</th>
+			</tr>			
+			<% for(CommentVo cmtVo : cmtList) { %>
+			<tr>
+				<td><%=cmtVo.getI_comment() %></td>
+				<td><%=cmtVo.getCmt() %></td>
+				<td><%=cmtVo.getR_datetime() %></td>
+			</tr>
+			<% } %>
+		</table>
+	</div>	
+	<% } %>
+	
 <% } %>
 </body>
 </html>
