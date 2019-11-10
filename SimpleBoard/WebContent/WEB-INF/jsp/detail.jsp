@@ -27,6 +27,9 @@
 </style>
 </head>
 <body>
+	<a href="list">
+		<button>리스트로 돌아가기</button>
+	</a>
 <% if(vo == null) { %>
 	<div>오류가 발생하였습니다.</div>	
 <% } else { %>
@@ -62,6 +65,7 @@
 	
 	<div>
 		<form action="detail" method="post">
+			<input type="text" name="i_comment" id="ele_cmt">
 			<input type="hidden" name="i_board" value="<%=vo.getI_board() %>">
 			<div>			
 				댓글 : <input type="text" name="comment">
@@ -70,19 +74,21 @@
 		</form>
 	</div>
 	
-	<% if(cmtList != null) { %>
+	<% if(cmtList != null && cmtList.size() > 0) { %>
 	<div>
 		<table>
 			<tr>
 				<th>번호</th>
 				<th>댓글</th>
 				<th>등록일시</th>
+				<th>삭제</th>
 			</tr>			
 			<% for(CommentVo cmtVo : cmtList) { %>
 			<tr>
 				<td><%=cmtVo.getI_comment() %></td>
 				<td><%=cmtVo.getCmt() %></td>
 				<td><%=cmtVo.getR_datetime() %></td>
+				<td><button onclick="delCmt(<%=cmtVo.getI_comment() %>)">삭제</button></td>
 			</tr>
 			<% } %>
 		</table>
@@ -90,6 +96,11 @@
 	<% } %>
 	
 <% } %>
+<script>
+	function delCmt(i_cmt) {
+		
+	}
+</script>
 </body>
 </html>
 
