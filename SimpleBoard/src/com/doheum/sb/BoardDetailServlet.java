@@ -1,8 +1,8 @@
 package com.doheum.sb;
 
 import java.io.IOException;
+import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,6 +20,11 @@ public class BoardDetailServlet extends HttpServlet {
 		System.out.println("err : " + err);
 		
 		int i_board = Integer.parseInt(str_board);
+		
+		List<CommentVo> list = SBDao.getCommentList(i_board);
+		request.setAttribute("cmtList", list);
+		
+		//request.setAttribute("commentList", SBDao.getCommentList(i_board));
 		
 		if(err != null) {
 			switch(err) {
@@ -39,12 +44,24 @@ public class BoardDetailServlet extends HttpServlet {
 	
 	//댓글달기
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String str_board = request.getParameter("i_board");		
-		int i_board = Integer.parseInt(str_board);
+		int i_board = Utils.parseStringToInt(str_board);
+		
+		if(i_board == 0) { //문제발생!!
+			
+		}		
+		//int i_board = Integer.parseInt(request.getParameter("i_board"));
+			
 		String cmt = request.getParameter("comment");
-
 		System.out.println("cmt : " + cmt);
-		System.out.println("i_board : " + i_board);
+		System.out.println("i_board : " + i_board);		
+		CommentVo vo = new CommentVo();
+		vo.setI_board(i_board);
+		vo.setCmt(cmt);		
+		SBDao.insertComment(vo);
+		
+		doGet(request, response);
 		
 	}
 

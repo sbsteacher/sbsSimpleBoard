@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="com.doheum.sb.*" %>
+<%@ page import="java.util.*" %>
 <%
 	BoardVo vo = (BoardVo)request.getAttribute("vo");
 	String msg = (String)request.getAttribute("msg");
+	List<CommentVo> cmtList = (List<CommentVo>) request.getAttribute("cmtList");
 %>    
 <!DOCTYPE html>
 <html>
@@ -60,7 +62,7 @@
 	
 	<div>
 		<form action="detail" method="post">
-			<input type="text" name="i_board" value="0">
+			<input type="hidden" name="i_board" value="<%=vo.getI_board() %>">
 			<div>			
 				댓글 : <input type="text" name="comment">
 				<input type="submit" value="댓글달기">

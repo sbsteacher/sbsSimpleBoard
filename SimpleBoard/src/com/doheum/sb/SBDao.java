@@ -1,7 +1,12 @@
 package com.doheum.sb;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SBDao {
 	
@@ -218,20 +223,72 @@ public class SBDao {
 		}
 	}
 	
+	public static void insertComment(CommentVo vo) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		String query = "INSERT INTO t_comment\r\n" + 
+					   "(i_board, cmt)\r\n" + 
+				       "VALUES" +
+				       "(?, ?)";
+		
+		try {
+			con = getCon();
+			ps = con.prepareStatement(query);
+			ps.setInt(1, vo.getI_board());
+			ps.setString(2, vo.getCmt());			
+			ps.execute();
+			
+		} catch (Exception e) {		
+			e.printStackTrace();
+		} finally {
+			close(con, ps);
+		}
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	//댓글 리스트 가져오기
+	public static List<CommentVo> getCommentList(int i_board) {
+		List<CommentVo> list = new ArrayList();
+		
+		String query = " SELECT * " + 
+				"FROM t_comment " + 
+				"WHERE i_board = ? " + 
+				"ORDER BY i_comment DESC ";
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			con = getCon();
+			ps = con.prepareStatement(query);
+			ps.setInt(1, i_board);	
+			
+			rs = ps.executeQuery();
+						
+			while (rs.next()) {
+				CommentVo vo = new CommentVo();				
+				vo.setI_comment(rs.getInt("i_comment"));
+				vo.setCmt(rs.getString("cmt"));
+				vo.setR_datetime(rs.getString("r_datetime"));
+				list.add(vo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(con, ps, rs);
+		}
+		
+		return list;
+	}
 	
 	
 	
 }
+
+
+
+
+
+
+
