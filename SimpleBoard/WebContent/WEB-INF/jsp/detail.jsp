@@ -57,6 +57,16 @@
 		</tr>
 		<% } %>
 	</table>	
+	
+	<div>
+		<form action="detail" method="post">
+			<input type="text" name="i_board" value="0">
+			<div>			
+				댓글 : <input type="text" name="comment">
+				<input type="submit" value="댓글달기">
+			</div>
+		</form>
+	</div>
 <% } %>
 </body>
 </html>

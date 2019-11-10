@@ -36,6 +36,17 @@ public class BoardDetailServlet extends HttpServlet {
 		
 		request.getRequestDispatcher("WEB-INF/jsp/detail.jsp").forward(request, response);
 	}	
+	
+	//댓글달기
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String str_board = request.getParameter("i_board");		
+		int i_board = Integer.parseInt(str_board);
+		String cmt = request.getParameter("comment");
+
+		System.out.println("cmt : " + cmt);
+		System.out.println("i_board : " + i_board);
+		
+	}
 
 }
 
