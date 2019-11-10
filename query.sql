@@ -1,0 +1,16 @@
+CREATE TABLE t_comment(
+	i_comment INT unsigned AUTO_INCREMENT,
+	i_board INT UNSIGNED,
+	cmt VARCHAR(300) NOT NULL,
+	r_datetime DATETIME DEFAULT NOW(),
+	FOREIGN KEY (i_board) REFERENCES T_BOARD(i_board),
+	PRIMARY KEY(i_comment)
+);
+
+CREATE TABLE t_board(
+	i_board INT PRIMARY KEY AUTO_INCREMENT,
+	title varCHAR(30) NOT NULL,
+	content TEXT NOT NULL,
+	cnt SMALLINT UNSIGNED DEFAULT '0',
+	regdatetime DATETIME DEFAULT NOW()	
+);
