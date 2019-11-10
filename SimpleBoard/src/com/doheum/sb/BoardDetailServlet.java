@@ -44,22 +44,29 @@ public class BoardDetailServlet extends HttpServlet {
 	
 	//댓글달기
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String str_comment = request.getParameter("i_comment");
 		
-		String str_board = request.getParameter("i_board");		
-		int i_board = Utils.parseStringToInt(str_board);
-		
-		if(i_board == 0) { //문제발생!!
+		if(str_comment.equals("0")) { //댓글 등록
+			String str_board = request.getParameter("i_board");		
+			int i_board = Utils.parseStringToInt(str_board);
 			
-		}		
-		//int i_board = Integer.parseInt(request.getParameter("i_board"));
+			if(i_board == 0) { //문제발생!!
+				
+			}		
+			//int i_board = Integer.parseInt(request.getParameter("i_board"));
+				
+			String cmt = request.getParameter("comment");
+			System.out.println("cmt : " + cmt);
+			System.out.println("i_board : " + i_board);		
+			CommentVo vo = new CommentVo();
+			vo.setI_board(i_board);
+			vo.setCmt(cmt);		
+			SBDao.insertComment(vo);
+		} else { //댓글 삭제
+			int i_comment = Integer.parseInt(str_comment);
 			
-		String cmt = request.getParameter("comment");
-		System.out.println("cmt : " + cmt);
-		System.out.println("i_board : " + i_board);		
-		CommentVo vo = new CommentVo();
-		vo.setI_board(i_board);
-		vo.setCmt(cmt);		
-		SBDao.insertComment(vo);
+			SBDao.delComment(i_comment);
+		}
 		
 		doGet(request, response);
 		

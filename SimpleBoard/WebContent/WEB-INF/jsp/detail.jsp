@@ -64,8 +64,8 @@
 	</table>	
 	
 	<div>
-		<form action="detail" method="post">
-			<input type="text" name="i_comment" id="ele_cmt">
+		<form action="detail" method="post" id="frm" onsubmit="return check()">
+			<input type="hidden" name="i_comment" value="0">
 			<input type="hidden" name="i_board" value="<%=vo.getI_board() %>">
 			<div>			
 				댓글 : <input type="text" name="comment">
@@ -97,8 +97,18 @@
 	
 <% } %>
 <script>
+	//댓글삭제
 	function delCmt(i_cmt) {
-		
+		frm.i_comment.value = i_cmt
+		frm.submit()
+	}
+	
+	function check() {	
+		if(frm.comment.value == '') {
+			alert('댓글 내용이 없습니다')
+			frm.comment.focus()
+			return false
+		}
 	}
 </script>
 </body>

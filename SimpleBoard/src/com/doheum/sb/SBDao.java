@@ -282,6 +282,26 @@ public class SBDao {
 		return list;
 	}
 	
+	public static void delComment(int i_cmt) {
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		String query = " DELETE FROM t_comment WHERE i_comment = ? ";
+
+		try {
+			con = getCon();
+			ps = con.prepareStatement(query);
+			ps.setInt(1, i_cmt);
+			
+			ps.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			close(con, ps);
+		}
+	}
 	
 	
 }
