@@ -51,7 +51,7 @@
 <body>
 	<div id="contentTitle">보드 리스트</div>
 	<div>
-		<a href="write">
+		<a href="write?p=<%=p %>">
 			<button>글쓰기</button>
 		</a>
 	</div>

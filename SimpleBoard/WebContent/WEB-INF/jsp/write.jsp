@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	String p = request.getParameter("p");
+%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +11,9 @@
 </head>
 <body>
 	<h1>글쓰기 화면</h1>
+	<a href="list?page=<%=p %>">
+		<button>리스트로 돌아가기</button>
+	</a>
 	<form action="write" method="post" onsubmit="return check()">
 		<div>
 			제목 : <input type="text" name="title" id="title"> 
