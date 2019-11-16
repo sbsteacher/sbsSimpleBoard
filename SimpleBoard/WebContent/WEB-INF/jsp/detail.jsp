@@ -63,9 +63,9 @@
 		</tr>
 		<% } %>
 	</table>	
-	
 	<div>
-		<form action="detail" method="post" id="frm" onsubmit="return check()">
+		<!-- action을 생략하면 현재 주소창에 적혀있는 주소로 post를 날립니다. -->
+		<form method="post" id="frm" onsubmit="return check()">
 			<input type="hidden" name="i_comment" value="0">
 			<input type="hidden" name="i_board" value="<%=vo.getI_board() %>">
 			<div>			

@@ -33,12 +33,15 @@ public class BoardDetailServlet extends HttpServlet {
 				break;
 			}
 		} else { //err 이 null인 경우만 cnt 값을 올려준다.
-			SBDao.plusCnt(i_board);
+			
+			String post = (String)request.getAttribute("post");			
+			if(post == null) {
+				SBDao.plusCnt(i_board);	
+			}
 		}
 				
 		BoardVo vo = SBDao.getBoardDetail(i_board);
 		request.setAttribute("vo", vo);
-		
 		request.getRequestDispatcher("WEB-INF/jsp/detail.jsp").forward(request, response);
 	}	
 	
@@ -68,6 +71,7 @@ public class BoardDetailServlet extends HttpServlet {
 			SBDao.delComment(i_comment);
 		}
 		
+		request.setAttribute("post", "");
 		doGet(request, response);
 		
 	}
