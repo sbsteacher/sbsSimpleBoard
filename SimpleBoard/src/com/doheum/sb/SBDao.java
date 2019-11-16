@@ -54,7 +54,8 @@ public class SBDao {
 	// 글쓰기
 	public static int insertBoard(BoardVo vo) {
 		int result = 0;
-		String query = " INSERT INTO t_board" + " (title, content)" + " VALUES" + " (?, ?)";
+		String query = " INSERT INTO t_board (title, content)"
+							+ " VALUES (?, ?)";
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -74,10 +75,13 @@ public class SBDao {
 	}
 
 	// 글 리스트 가져오기
-	public static List<BoardVo> getBoardList() {
+	public static List<BoardVo> getBoardList(int sIdx, int showCnt) {
 		List<BoardVo> list = new ArrayList();
 		
-		String query = " SELECT i_board, title, regdatetime, cnt FROM t_board ";
+		String query = " SELECT i_board, title, regdatetime, cnt "
+				+ " FROM t_board ORDER BY i_board DESC"
+				+ " LIMIT ?, ? ";
+				//+ "LIMIT " + sIdx + ", " + showCnt;
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -86,6 +90,8 @@ public class SBDao {
 		try {
 			con = getCon();
 			ps = con.prepareStatement(query);
+			ps.setInt(1, sIdx);
+			ps.setInt(2, showCnt);
 			rs = ps.executeQuery();
 						
 			while (rs.next()) {
@@ -110,6 +116,36 @@ public class SBDao {
 		}
 
 		return list;
+	}
+	
+	public static int getTotalPagingCnt(int showCnt) {
+		int result = 0;
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String sql = " SELECT CEIL(COUNT(*) / ?) FROM t_board ";
+		
+		try {
+			con = getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, showCnt);
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+		} catch (Exception e) {			
+			e.printStackTrace();
+		} finally {
+			close(con, ps, rs);
+		}
+		
+		
+		return result;
 	}
 
 	// 글 디테일 가져오기
@@ -184,7 +220,7 @@ public class SBDao {
 					+ " SET title = ? " 
 					+ " , content = ? " 
 					+ " WHERE i_board = ? ";
-
+		
 		try {
 			con = getCon();
 			ps = con.prepareStatement(query);
@@ -227,10 +263,10 @@ public class SBDao {
 		Connection con = null;
 		PreparedStatement ps = null;
 		
-		String query = "INSERT INTO t_comment\r\n" + 
-					   "(i_board, cmt)\r\n" + 
-				       "VALUES" +
-				       "(?, ?)";
+		String query = " INSERT INTO t_comment " + 
+					   " (i_board, cmt) " + 
+				       " VALUES " +
+				       " (?, ?) ";
 		
 		try {
 			con = getCon();
@@ -301,9 +337,7 @@ public class SBDao {
 		} finally {
 			close(con, ps);
 		}
-	}
-	
-	
+	}	
 }
 
 

@@ -4,6 +4,7 @@
 <%@ page import="com.doheum.sb.*" %>    
 <%
 	List<BoardVo> data = (List<BoardVo>)request.getAttribute("data");
+	int totalPagingCnt = (int)request.getAttribute("totalPagingCnt");
 %>    
 <!DOCTYPE html>
 <html>
@@ -57,6 +58,11 @@
 			<% } %>
 		<% } %>
 	</table>
+	<div>
+		<% for(int i=1; i<=totalPagingCnt; i++) { %>
+			<span><%=i %></span>&nbsp;&nbsp;
+		<% } %>
+	</div>
 </body>
 </html>
 
