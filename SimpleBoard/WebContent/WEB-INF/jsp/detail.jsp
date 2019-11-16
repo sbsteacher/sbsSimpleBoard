@@ -6,6 +6,7 @@
 	BoardVo vo = (BoardVo)request.getAttribute("vo");
 	String msg = (String)request.getAttribute("msg");
 	List<CommentVo> cmtList = (List<CommentVo>) request.getAttribute("cmtList");
+	String p = request.getParameter("p");
 %>    
 <!DOCTYPE html>
 <html>
@@ -27,7 +28,7 @@
 </style>
 </head>
 <body>
-	<a href="list">
+	<a href="list?page=<%=p %>">
 		<button>리스트로 돌아가기</button>
 	</a>
 <% if(vo == null) { %>

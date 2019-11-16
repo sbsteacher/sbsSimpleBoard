@@ -5,6 +5,11 @@
 <%
 	List<BoardVo> data = (List<BoardVo>)request.getAttribute("data");
 	int totalPagingCnt = (int)request.getAttribute("totalPagingCnt");
+	
+	String p = request.getParameter("page");
+	if(p == null) {
+		p = "1";
+	}
 %>    
 <!DOCTYPE html>
 <html>
@@ -19,6 +24,16 @@
 	
 	.center {
 		text-align: center;
+	}
+	
+	a {
+		text-decoration: none;
+		color: black;
+	}
+	
+	.aSelected {
+		color: red !important;
+		font-weight: bold;		
 	}
 	
 	table {
@@ -51,7 +66,7 @@
 			<% for(BoardVo vo : data) { %>
 				<tr>
 					<td><%=vo.getI_board() %></td>
-					<td><a href="detail?i_board=<%=vo.getI_board()%>"><%=vo.getTitle() %></a></td>
+					<td><a href="detail?i_board=<%=vo.getI_board()%>&p=<%=p %>"><%=vo.getTitle() %></a></td>
 					<td><%=vo.getRegDateTime() %></td>
 					<td class="center"><%=vo.getCnt() %></td>
 				</tr>				
@@ -59,9 +74,17 @@
 		<% } %>
 	</table>
 	<div>
-		<% for(int i=1; i<=totalPagingCnt; i++) { %>
-			<span>
-				<a href="list?page=<%=i %>"><%=i %></a>
+		<% 
+		
+			for(int i=1; i<=totalPagingCnt; i++) { 
+				String cls = "";
+				
+				if(i == Integer.parseInt(p)) {
+					cls = "aSelected";
+				}
+		%>
+			<span >
+				<a class="<%=cls %>" href="list?page=<%=i %>"><%=i %></a>
 			</span>&nbsp;&nbsp;
 		<% } %>
 	</div>
