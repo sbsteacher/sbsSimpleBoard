@@ -60,7 +60,9 @@
 	</table>
 	<div>
 		<% for(int i=1; i<=totalPagingCnt; i++) { %>
-			<span><%=i %></span>&nbsp;&nbsp;
+			<span>
+				<a href="list?page=<%=i %>"><%=i %></a>
+			</span>&nbsp;&nbsp;
 		<% } %>
 	</div>
 </body>
