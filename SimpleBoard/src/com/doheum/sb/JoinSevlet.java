@@ -15,10 +15,14 @@ public class JoinSevlet extends HttpServlet {
 		request.getRequestDispatcher("WEB-INF/jsp/join.jsp").forward(request, response);
 	}
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		String uid = request.getParameter("uid");
 		String upw = request.getParameter("upw");
 		String nm = request.getParameter("nm");
+		
+		UserVO uVO = new UserVO();
+		uVO.setUid(uid);
+		
 		
 		System.out.println("uid: " + uid);
 		System.out.println("upw" + upw);

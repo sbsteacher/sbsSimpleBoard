@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.doheum.sb.dao.BoardDAO;
+
 @WebServlet("/mod")
 public class BoardModServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -19,7 +21,7 @@ public class BoardModServlet extends HttpServlet {
 		BoardVo vo = (BoardVo)request.getAttribute("vo");
 		
 		if(vo == null) {
-			vo = SBDao.getBoardDetail(i_board);
+			vo = BoardDAO.getBoardDetail(i_board);
 			request.setAttribute("vo", vo);
 		}		
 		request.getRequestDispatcher("WEB-INF/jsp/mod.jsp").forward(request, response);
@@ -33,7 +35,7 @@ public class BoardModServlet extends HttpServlet {
 		String content = request.getParameter("content");
 		
 		BoardVo vo = new BoardVo(i_board, title, content);
-		int result = SBDao.modBoard(vo);
+		int result = BoardDAO.modBoard(vo);
 		
 		if(result == 0) { //수정 실패 (수정 화면으로 이동)
 			request.setAttribute("vo", vo);

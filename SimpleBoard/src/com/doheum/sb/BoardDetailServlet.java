@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.doheum.sb.dao.BoardDAO;
+
 @WebServlet("/detail")
 public class BoardDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -21,7 +23,7 @@ public class BoardDetailServlet extends HttpServlet {
 		
 		int i_board = Integer.parseInt(str_board);
 		
-		List<CommentVo> list = SBDao.getCommentList(i_board);
+		List<CommentVo> list = BoardDAO.getCommentList(i_board);
 		request.setAttribute("cmtList", list);
 		
 		//request.setAttribute("commentList", SBDao.getCommentList(i_board));
@@ -36,11 +38,11 @@ public class BoardDetailServlet extends HttpServlet {
 			
 			String post = (String)request.getAttribute("post");			
 			if(post == null) {
-				SBDao.plusCnt(i_board);	
+				BoardDAO.plusCnt(i_board);	
 			}
 		}
 				
-		BoardVo vo = SBDao.getBoardDetail(i_board);
+		BoardVo vo = BoardDAO.getBoardDetail(i_board);
 		request.setAttribute("vo", vo);
 		request.getRequestDispatcher("WEB-INF/jsp/detail.jsp").forward(request, response);
 	}	
@@ -64,11 +66,11 @@ public class BoardDetailServlet extends HttpServlet {
 			CommentVo vo = new CommentVo();
 			vo.setI_board(i_board);
 			vo.setCmt(cmt);		
-			SBDao.insertComment(vo);
+			BoardDAO.insertComment(vo);
 		} else { //댓글 삭제
 			int i_comment = Integer.parseInt(str_comment);
 			
-			SBDao.delComment(i_comment);
+			BoardDAO.delComment(i_comment);
 		}
 		
 		request.setAttribute("post", "");

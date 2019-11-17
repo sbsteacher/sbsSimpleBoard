@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.doheum.sb.dao.BoardDAO;
+
 @WebServlet("/write")
 public class BoardWriteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -33,7 +35,7 @@ public class BoardWriteServlet extends HttpServlet {
 		
 		BoardVo vo = new BoardVo(title, content);
 		
-		int result = SBDao.insertBoard(vo); //여러분들은 주석처리 할 필요 없음!!
+		int result = BoardDAO.insertBoard(vo); //여러분들은 주석처리 할 필요 없음!!
 		response.sendRedirect("list");
 	}
 

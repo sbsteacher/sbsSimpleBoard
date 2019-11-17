@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.doheum.sb.dao.BoardDAO;
+
 @WebServlet("/del")
 public class BoardDelServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -21,7 +23,7 @@ public class BoardDelServlet extends HttpServlet {
 			return;
 		}
 		
-		int result = SBDao.delBoard(i_board);
+		int result = BoardDAO.delBoard(i_board);
 		
 		if(result == 0) {
 			//예외처리 나중에

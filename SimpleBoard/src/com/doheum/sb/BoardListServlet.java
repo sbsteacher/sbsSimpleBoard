@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.doheum.sb.dao.BoardDAO;
+
 @WebServlet("/list")
 public class BoardListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;     
@@ -27,10 +29,10 @@ public class BoardListServlet extends HttpServlet {
 		 
 		int showCnt = 5;
 		int sIdx = (page - 1) * showCnt;
-		List<BoardVo> list = SBDao.getBoardList(sIdx, showCnt);
+		List<BoardVo> list = BoardDAO.getBoardList(sIdx, showCnt);
 		request.setAttribute("data", list);		
 			
-		int totalPagingCnt = SBDao.getTotalPagingCnt(showCnt);
+		int totalPagingCnt = BoardDAO.getTotalPagingCnt(showCnt);
 		request.setAttribute("totalPagingCnt", totalPagingCnt);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/jsp/list.jsp");
