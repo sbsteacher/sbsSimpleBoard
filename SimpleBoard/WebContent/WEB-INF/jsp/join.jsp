@@ -35,6 +35,12 @@
 		<div>이름: <input type="text" name="nm"></div>
 		<div><input type="submit" value="회원가입"></div>
 	</form>
+	<div></div>
 	<a href="login">로그인 돌아가기</a>
 </body>
 </html>
+
+
+
+
+

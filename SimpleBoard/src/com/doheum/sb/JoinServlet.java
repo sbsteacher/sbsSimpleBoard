@@ -15,6 +15,26 @@ public class JoinServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Integer result = (Integer)request.getAttribute("result");		
+		System.out.println("result : " + result);
+		
+		
+		if(result != null) {
+			String msg;
+			switch(result) {
+			case 2:
+				msg = "중복된 아이디가 있습니다.";
+				break;
+			case 3:
+				msg = "내용이 너무 긴 값이 있습니다.";
+				break;
+			default:
+				msg = "에러가 발생되었습니다.";
+				break;
+			}
+			request.setAttribute("msg",  msg);
+		}
+		
 		request.getRequestDispatcher("WEB-INF/jsp/join.jsp").forward(request, response);
 	}
 	
@@ -32,7 +52,14 @@ public class JoinServlet extends HttpServlet {
 		uVO.setUpw(upw);
 		uVO.setNm(nm);
 		
-		UserDAO.insertUser(uVO);	
+		int result = UserDAO.insertUser(uVO);	
+		
+		if(result == 1) {
+			response.sendRedirect("login");
+		} else {
+			request.setAttribute("result", result);
+			doGet(request, response);
+		}
 	
 	}
 }
