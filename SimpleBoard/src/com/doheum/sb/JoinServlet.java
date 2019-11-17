@@ -17,8 +17,7 @@ public class JoinServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Integer result = (Integer)request.getAttribute("result");		
 		System.out.println("result : " + result);
-		
-		
+				
 		if(result != null) {
 			String msg;
 			switch(result) {
@@ -57,6 +56,7 @@ public class JoinServlet extends HttpServlet {
 		if(result == 1) {
 			response.sendRedirect("login");
 		} else {
+			request.setAttribute("vo", uVO);
 			request.setAttribute("result", result);
 			doGet(request, response);
 		}

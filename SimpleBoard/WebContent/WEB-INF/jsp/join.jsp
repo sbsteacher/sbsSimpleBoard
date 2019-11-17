@@ -1,5 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.doheum.sb.*" %>    
+<%
+	String msg = (String)request.getAttribute("msg");
+	UserVO vo = (UserVO)request.getAttribute("vo");
+	
+	if(vo == null) {
+		vo = new UserVO();
+		vo.setNm("");
+		vo.setUid("");
+		vo.setUpw("");
+	}
+%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,13 +41,15 @@
 </head>
 <body>
 	<form id="frm" action="join" method="post" onsubmit="return check()">
-		<div>아이디: <input type="text" name="uid"></div>
-		<div>비밀번호: <input type="password" name="upw"></div>
-		<div>비밀번호 확인: <input type="password" name="reupw"></div>
-		<div>이름: <input type="text" name="nm"></div>
+		<div>아이디: <input type="text" name="uid" value="<%=vo.getUid()%>"></div>
+		<div>비밀번호: <input type="password" name="upw" value="<%=vo.getUpw()%>"></div>
+		<div>비밀번호 확인: <input type="password" name="reupw" value="<%=vo.getUpw()%>"></div>
+		<div>이름: <input type="text" name="nm" value="<%=vo.getNm()%>"></div>
 		<div><input type="submit" value="회원가입"></div>
-	</form>
-	<div></div>
+	</form>	
+	<% if(msg != null) { %>
+		<div><%=msg %></div>
+	<% } %>	
 	<a href="login">로그인 돌아가기</a>
 </body>
 </html>
