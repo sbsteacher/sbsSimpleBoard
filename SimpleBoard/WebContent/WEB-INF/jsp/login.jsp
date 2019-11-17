@@ -13,5 +13,6 @@
 		<div><input type="submit" value="로그인"></div>
 	</form>
 	<a href="join">회원가입</a>
+	<div></div>
 </body>
 </html>
