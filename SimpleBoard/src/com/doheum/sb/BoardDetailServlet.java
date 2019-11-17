@@ -15,11 +15,7 @@ import com.doheum.sb.dao.BoardDAO;
 public class BoardDetailServlet extends LoginNeedServlet {
 	private static final long serialVersionUID = 1L;
     
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(logoutCheck(request, response)) {
-			return;
-		}
-		
+	protected void doGetProc(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String str_board = request.getParameter("i_board");
 		String err = request.getParameter("err");
 		

@@ -16,12 +16,10 @@ import com.doheum.sb.dao.BoardDAO;
 @WebServlet("/list")
 public class BoardListServlet extends LoginNeedServlet {
 	private static final long serialVersionUID = 1L;     
-  
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(logoutCheck(request, response)) {
-			return;
-		}
-		
+  	
+	@Override
+	protected void doGetProc(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		System.out.println("list!!!");		
 		HttpSession session = request.getSession();		
 		UserVO loginUser = (UserVO)session.getAttribute("loginUser");		
@@ -48,5 +46,6 @@ public class BoardListServlet extends LoginNeedServlet {
 		
 		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/jsp/list.jsp");
 		rd.forward(request, response);
+		
 	}
 }

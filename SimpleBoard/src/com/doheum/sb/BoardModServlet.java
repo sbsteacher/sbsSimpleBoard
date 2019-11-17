@@ -15,11 +15,7 @@ public class BoardModServlet extends LoginNeedServlet {
 	private static final long serialVersionUID = 1L;
     
 	//수정화면 띄우기
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(logoutCheck(request, response)) {
-			return;
-		}
-
+	protected void doGetProc(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();		
 		UserVO loginUser = (UserVO)session.getAttribute("loginUser");		
 		if(loginUser == null) {
