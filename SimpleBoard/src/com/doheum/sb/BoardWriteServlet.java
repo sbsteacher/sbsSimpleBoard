@@ -12,10 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import com.doheum.sb.dao.BoardDAO;
 
 @WebServlet("/write")
-public class BoardWriteServlet extends HttpServlet {
+public class BoardWriteServlet extends LoginNeedServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(logoutCheck(request, response)) {
+			return;
+		}
+		
 		String title = request.getParameter("title");
 		System.out.println("title : " + title);
 		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/jsp/write.jsp");

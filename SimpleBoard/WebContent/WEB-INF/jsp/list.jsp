@@ -49,6 +49,10 @@
 </style>
 </head>
 <body>
+	<div>
+		${loginUser.nm}님 환영합니다.
+		<a href="logout">로그아웃</a>
+	</div>
 	<div id="contentTitle">보드 리스트</div>
 	<div>
 		<a href="write?p=<%=p %>">
@@ -74,8 +78,7 @@
 		<% } %>
 	</table>
 	<div>
-		<% 
-		
+		<% 		
 			for(int i=1; i<=totalPagingCnt; i++) { 
 				String cls = "";
 				

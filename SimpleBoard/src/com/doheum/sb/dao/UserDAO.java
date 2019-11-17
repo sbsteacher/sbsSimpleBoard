@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLIntegrityConstraintViolationException;
 
+import com.doheum.sb.LoginResultVO;
 import com.doheum.sb.UserVO;
 import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
 
@@ -46,9 +47,9 @@ public class UserDAO {
 	}
 	
 	//0:에러발생, 1:로그인 성공, 2:비밀번호 틀림, 3:아이디가 없음
-	public static int login(UserVO vo) {
-		int result = 0;
-		
+	public static LoginResultVO login(UserVO vo) {
+		LoginResultVO result = new LoginResultVO();
+				
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -63,15 +64,22 @@ public class UserDAO {
 			rs = ps.executeQuery();
 			if(rs.next()) {
 				String dbUpw = rs.getString("upw");
+				String dbNm = rs.getString("nm");
 				
 				if(vo.getUpw().equals(dbUpw)) { // 로그인 성공
-					result = 1;
+					result.setResult(1);
+					//비밀번호는 빼고, 이름은 넣을겁니다.
+					vo.setUpw("");
+					vo.setNm(dbNm);
+					
+					result.setVo(vo);
+					
 				} else { // 비밀번호 틀림
-					result = 2;
+					result.setResult(2);					
 				}
 				
 			} else { //아이디가 없음
-				result = 3;
+				result.setResult(3);
 			}			
 		} catch (Exception e) {
 			e.printStackTrace();

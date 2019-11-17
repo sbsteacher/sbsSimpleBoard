@@ -6,15 +6,28 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.doheum.sb.dao.BoardDAO;
 
 @WebServlet("/mod")
-public class BoardModServlet extends HttpServlet {
+public class BoardModServlet extends LoginNeedServlet {
 	private static final long serialVersionUID = 1L;
     
 	//수정화면 띄우기
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(logoutCheck(request, response)) {
+			return;
+		}
+
+		HttpSession session = request.getSession();		
+		UserVO loginUser = (UserVO)session.getAttribute("loginUser");		
+		if(loginUser == null) {
+			response.sendRedirect("login");
+			return;
+		}
+		
+		
 		String str_board = request.getParameter("i_board");
 		int i_board = Utils.parseStringToInt(str_board);
 		

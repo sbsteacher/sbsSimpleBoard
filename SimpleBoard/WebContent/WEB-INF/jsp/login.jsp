@@ -1,5 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.doheum.sb.*" %>    
+<%
+	String msg = (String)request.getAttribute("msg");
+	UserVO vo = (UserVO)request.getAttribute("vo");
+	
+
+	if(vo == null) {
+		vo = new UserVO();		
+		vo.setUid("");
+		vo.setUpw("");
+	}
+%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,11 +20,13 @@
 </head>
 <body>
 	<form action="login" method="post">
-		<div>아이디: <input type="text" name="uid"></div>
-		<div>비밀번호: <input type="password" name="upw"></div>
+		<div>아이디: <input type="text" name="uid" value="<%=vo.getUid()%>"></div>
+		<div>비밀번호: <input type="password" name="upw" value="<%=vo.getUpw()%>"></div>
 		<div><input type="submit" value="로그인"></div>
 	</form>
 	<a href="join">회원가입</a>
-	<div></div>
+	<% if(msg != null) { %>
+		<div><%=msg %></div>
+	<% } %>	
 </body>
 </html>

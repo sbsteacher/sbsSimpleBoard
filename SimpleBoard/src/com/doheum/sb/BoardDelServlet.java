@@ -10,10 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 import com.doheum.sb.dao.BoardDAO;
 
 @WebServlet("/del")
-public class BoardDelServlet extends HttpServlet {
+public class BoardDelServlet extends LoginNeedServlet {
 	private static final long serialVersionUID = 1L;
    
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+		if(logoutCheck(request, response)) {
+			return;
+		}
+		
 		String str = request.getParameter("i_board"); // "3aa"
 		
 		int i_board = Utils.parseStringToInt(str); //3
