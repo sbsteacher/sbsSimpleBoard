@@ -234,15 +234,16 @@ public class BoardDAO {
 		PreparedStatement ps = null;
 		
 		String query = " INSERT INTO t_comment " + 
-					   " (i_board, cmt) " + 
+					   " (i_board, cmt, uid) " + 
 				       " VALUES " +
-				       " (?, ?) ";
+				       " (?, ?, ?) ";
 		
 		try {
 			con = getCon();
 			ps = con.prepareStatement(query);
 			ps.setInt(1, vo.getI_board());
-			ps.setString(2, vo.getCmt());			
+			ps.setString(2, vo.getCmt());
+			ps.setString(3,  vo.getUid());
 			ps.execute();
 			
 		} catch (Exception e) {		

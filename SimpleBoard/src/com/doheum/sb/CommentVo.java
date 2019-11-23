@@ -5,7 +5,21 @@ public class CommentVo {
 	private int i_board;
 	private String cmt;
 	private String r_datetime;
+	private String uid;
+	private String nm;
 	
+	public String getUid() {
+		return uid;
+	}
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+	public String getNm() {
+		return nm;
+	}
+	public void setNm(String nm) {
+		this.nm = nm;
+	}
 	public int getI_comment() {
 		return i_comment;
 	}

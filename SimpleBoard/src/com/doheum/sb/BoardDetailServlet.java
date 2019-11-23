@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.doheum.sb.dao.BoardDAO;
 
@@ -65,7 +66,13 @@ public class BoardDetailServlet extends LoginNeedServlet {
 			System.out.println("i_board : " + i_board);		
 			CommentVo vo = new CommentVo();
 			vo.setI_board(i_board);
-			vo.setCmt(cmt);		
+			vo.setCmt(cmt);
+			
+			//누가 작성하는 글인지 uid값을 세팅!!
+			HttpSession session = request.getSession();
+			UserVO loginUser = (UserVO)session.getAttribute("loginUser");			
+			vo.setUid(loginUser.getUid());
+			
 			BoardDAO.insertComment(vo);
 		} else { //댓글 삭제
 			int i_comment = Integer.parseInt(str_comment);
