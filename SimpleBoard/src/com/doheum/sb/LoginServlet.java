@@ -44,7 +44,7 @@ public class LoginServlet extends HttpServlet {
 		System.out.println("uid : " + uid);
 		System.out.println("upw : " + upw);
 		
-		upw = Utils.encryptSHA256(upw);
+		upw = Utils.encryptSHA256(upw); //비밀번호 암호화
 		
 		UserVO vo = new UserVO(); //C
 		vo.setUid(uid);
