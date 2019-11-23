@@ -81,6 +81,7 @@
 			<tr>
 				<th>번호</th>
 				<th>댓글</th>
+				<th>작성자</th>
 				<th>등록일시</th>
 				<th>삭제</th>
 			</tr>			
@@ -88,6 +89,7 @@
 			<tr>
 				<td><%=cmtVo.getI_comment() %></td>
 				<td><%=cmtVo.getCmt() %></td>
+				<td><%=cmtVo.getNm() %></td>
 				<td><%=cmtVo.getR_datetime() %></td>
 				<td><button onclick="delCmt(<%=cmtVo.getI_comment() %>)">삭제</button></td>
 			</tr>

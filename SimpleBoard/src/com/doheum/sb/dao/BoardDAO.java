@@ -257,11 +257,12 @@ public class BoardDAO {
 	public static List<CommentVo> getCommentList(int i_board) {
 		List<CommentVo> list = new ArrayList();
 		
-		String query = " SELECT * " + 
-				"FROM t_comment " + 
-				"WHERE i_board = ? " + 
-				"ORDER BY i_comment DESC ";
-
+		String query = " SELECT A.i_comment, A.cmt, A.r_datetime, B.nm " 
+				+	" FROM t_comment A "
+				+ " INNER JOIN t_user B "
+				+ " ON A.uid = B.uid "
+				+ " WHERE i_board = ?  "
+				+ " ORDER BY i_comment DESC  ";
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -278,6 +279,7 @@ public class BoardDAO {
 				vo.setI_comment(rs.getInt("i_comment"));
 				vo.setCmt(rs.getString("cmt"));
 				vo.setR_datetime(rs.getString("r_datetime"));
+				vo.setNm(rs.getString("nm"));
 				list.add(vo);
 			}
 		} catch (Exception e) {
