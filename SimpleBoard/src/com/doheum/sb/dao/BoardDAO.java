@@ -162,18 +162,19 @@ public class BoardDAO {
 	}
 
 	// 글삭제
-	public static int delBoard(int i_board) {
+	public static int delBoard(BoardVo param) {
 		int result = 0; // 디폴트 삭제 못 했다
 
 		Connection con = null;
 		PreparedStatement ps = null;
 
-		String query = " DELETE FROM t_board WHERE i_board = ? ";
+		String query = " DELETE FROM t_board WHERE i_board = ? AND uid = ? ";
 
 		try {
 			con = getCon();
 			ps = con.prepareStatement(query);
-			ps.setInt(1, i_board);
+			ps.setInt(1, param.getI_board());
+			ps.setString(2, param.getUid());
 			result = ps.executeUpdate();
 
 		} catch (Exception e) {
