@@ -16,11 +16,11 @@ public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Integer result = (Integer)request.getAttribute("result");
+		LoginResultVO result = (LoginResultVO)request.getAttribute("result");
 		
 		if(result != null) {
 			String msg;
-			switch(result) {
+			switch(result.getResult()) {
 			case 2:
 				msg = "비밀번호를 확인해 주세요";
 				break;
@@ -44,6 +44,8 @@ public class LoginServlet extends HttpServlet {
 		System.out.println("uid : " + uid);
 		System.out.println("upw : " + upw);
 		
+		upw = Utils.encryptSHA256(upw);
+		
 		UserVO vo = new UserVO(); //C
 		vo.setUid(uid);
 		vo.setUpw(upw);
@@ -55,7 +57,8 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("loginUser", result.getVo());
 			
 			response.sendRedirect("list");
-		} else {
+		} else { //로그인 실패
+			vo.setUpw(""); 
 			request.setAttribute("vo", vo);
 			request.setAttribute("result", result);
 			doGet(request, response);
