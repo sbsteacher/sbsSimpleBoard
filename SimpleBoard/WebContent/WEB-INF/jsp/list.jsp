@@ -63,6 +63,7 @@
 		<tr>
 			<th>번호</th>
 			<th>제목</th>
+			<th>글쓴이</th>
 			<th>날짜</th>
 			<th>조회수</th>
 		</tr>
@@ -71,6 +72,7 @@
 				<tr>
 					<td><%=vo.getI_board() %></td>
 					<td><a href="detail?i_board=<%=vo.getI_board()%>&p=<%=p %>"><%=vo.getTitle() %></a></td>
+					<td><%=vo.getNm() %></td>
 					<td><%=vo.getRegDateTime() %></td>
 					<td class="center"><%=vo.getCnt() %></td>
 				</tr>				

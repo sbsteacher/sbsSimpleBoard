@@ -5,9 +5,9 @@ import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.doheum.sb.dao.BoardDAO;
 
@@ -34,6 +34,11 @@ public class BoardWriteServlet extends LoginNeedServlet {
 		//int, char, float, byte, short, boolean, double 
 		
 		BoardVo vo = new BoardVo(title, content);
+		
+		//누가 작성하는 글인지 uid값을 세팅!!
+		HttpSession session = request.getSession();
+		UserVO loginUser = (UserVO)session.getAttribute("loginUser");
+		vo.setUid(loginUser.getUid());
 		
 		int result = BoardDAO.insertBoard(vo); //여러분들은 주석처리 할 필요 없음!!
 		response.sendRedirect("list");

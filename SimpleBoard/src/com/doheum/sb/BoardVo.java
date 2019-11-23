@@ -6,6 +6,8 @@ public class BoardVo {
 	private String content;
 	private String regDateTime;
 	private int cnt;
+	private String uid;
+	private String nm;
 	
 	public BoardVo() {}
 	
@@ -31,6 +33,22 @@ public class BoardVo {
 		this.content = content;
 		this.regDateTime = regDateTime;
 		this.cnt = cnt;
+	}
+		
+	public String getNm() {
+		return nm;
+	}
+
+	public void setNm(String nm) {
+		this.nm = nm;
+	}
+
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
 	}
 
 	public int getI_board() {

@@ -17,8 +17,8 @@ public class BoardDAO {
 	// 글쓰기
 	public static int insertBoard(BoardVo vo) {
 		int result = 0;
-		String query = " INSERT INTO t_board (title, content) "
-							+ " VALUES (?, ?) ";
+		String query = " INSERT INTO t_board (title, content, uid) "
+							+ " VALUES (?, ?, ?) ";
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -26,6 +26,8 @@ public class BoardDAO {
 			ps = con.prepareStatement(query);
 			ps.setString(1, vo.getTitle());
 			ps.setString(2, vo.getContent());
+			ps.setString(3, vo.getUid());
+			
 			result = ps.executeUpdate();
 
 		} catch (Exception e) {
@@ -41,10 +43,13 @@ public class BoardDAO {
 	public static List<BoardVo> getBoardList(int sIdx, int showCnt) {
 		List<BoardVo> list = new ArrayList();
 		
-		String query = " SELECT i_board, title, regdatetime, cnt "
-				+ " FROM t_board ORDER BY i_board DESC"
+		String query = " SELECT A.i_board, A.title, A.content "
+				+ " , A.regdatetime, A.cnt, B.nm "
+				+ " FROM t_board A "
+				+ " INNER JOIN t_user B "
+				+ " ON A.uid = B.uid "
+				+ " ORDER BY i_board DESC "
 				+ " LIMIT ?, ? ";
-				//+ "LIMIT " + sIdx + ", " + showCnt;
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -63,11 +68,13 @@ public class BoardDAO {
 				String title = rs.getString("title");
 				String regDateTime = rs.getString("regdatetime");
 				int cnt = rs.getInt("cnt");
+				String nm = rs.getString("nm");
 				
 				vo.setI_board(i_board);
 				vo.setTitle(title);
 				vo.setRegDateTime(regDateTime);
 				vo.setCnt(cnt);
+				vo.setNm(nm);
 				
 				list.add(vo);
 			}
