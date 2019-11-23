@@ -7,6 +7,8 @@
 	String msg = (String)request.getAttribute("msg");
 	List<CommentVo> cmtList = (List<CommentVo>) request.getAttribute("cmtList");
 	String p = request.getParameter("p");
+	
+	UserVO loginUser = (UserVO)session.getAttribute("loginUser");
 %>    
 <!DOCTYPE html>
 <html>
@@ -18,6 +20,7 @@
 		padding: 20px;
 	}
 	table {
+		width: 100%;
 		border-collapse: collapse;
 		border: 1px solid #000;
 	}
@@ -37,25 +40,29 @@
 	<table>
 		<tr>
 			<th>제목</th>
-			<td colspan="3"><%=vo.getTitle() %></td>
+			<td colspan="5"><%=vo.getTitle() %></td>
 		</tr>
 		<tr>
 			<td>날짜</td>
 			<td><%=vo.getRegDateTime() %></td>
 			<td>조회수</td>
 			<td><%=vo.getCnt() %></td>
+			<td>작성자</td>
+			<td><%=vo.getNm() %></td>
 		</tr>
 		<tr>
-			<td colspan="4"><%=vo.getContent() %></td>
+			<td colspan="6"><%=vo.getContent() %></td>
 		</tr>
+		<% if(vo.getUid().equals(loginUser.getUid())) { %>
 		<tr>
-			<td colspan="2">
+			<td colspan="3">
 				<a href="del?i_board=<%=vo.getI_board() %>">삭제</a>
 			</td>
-			<td colspan="2">
+			<td colspan="3">
 				<a href="mod?i_board=<%=vo.getI_board() %>">수정</a>
 			</td>
 		</tr>
+		<% } %>
 		<% if(msg != null) { %>
 		<tr>
 			<td>메시지</td>

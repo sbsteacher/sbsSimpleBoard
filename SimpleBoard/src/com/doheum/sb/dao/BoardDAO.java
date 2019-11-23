@@ -121,7 +121,11 @@ public class BoardDAO {
 	// 글 디테일 가져오기
 	public static BoardVo getBoardDetail(int i_board) {
 		BoardVo vo = new BoardVo();
-		String query = " SELECT * FROM t_board WHERE i_board = ? ";
+		String query = " SELECT A.*, B.nm " + 
+				" FROM t_board A " + 
+				" INNER JOIN t_user B " + 
+				" ON A.uid = B.uid " + 
+				" WHERE i_board = ? ";
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -137,12 +141,16 @@ public class BoardDAO {
 				String content = rs.getString("content");
 				String regDateTime = rs.getString("regdatetime");
 				int cnt = rs.getInt("cnt");
+				String uid = rs.getString("uid"); //detail.jsp 에서 수정, 삭제 버튼 나타나게 할지 안할지 결정하기 위한 값
+				String nm = rs.getString("nm");
 				
 				vo.setI_board(i_board);
 				vo.setTitle(title);
 				vo.setContent(content);
 				vo.setRegDateTime(regDateTime);
 				vo.setCnt(cnt);
+				vo.setUid(uid);
+				vo.setNm(nm);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
