@@ -59,6 +59,7 @@ public class JoinServlet extends HttpServlet {
 		if(result == 1) {
 			response.sendRedirect("login");
 		} else {
+			uVO.setUpw("");
 			request.setAttribute("vo", uVO);
 			request.setAttribute("result", result);
 			doGet(request, response);
