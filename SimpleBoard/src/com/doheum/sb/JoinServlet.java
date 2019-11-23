@@ -45,7 +45,10 @@ public class JoinServlet extends HttpServlet {
 		System.out.println("uid: " + uid);
 		System.out.println("upw" + upw);
 		System.out.println("nm: " + nm);
-				
+		
+		upw = Utils.encryptSHA256(upw);
+		System.out.println("upw : " + upw);
+		
 		UserVO uVO = new UserVO();
 		uVO.setUid(uid);
 		uVO.setUpw(upw);
