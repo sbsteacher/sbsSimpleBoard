@@ -43,13 +43,20 @@ public class BoardDAO {
 	public static List<BoardVO> getBoardList(int sIdx, int showCnt) {
 		List<BoardVO> list = new ArrayList();
 		
-		String query = " SELECT A.i_board, A.title, A.content "
-				+ " , A.regdatetime, A.cnt, B.nm "
-				+ " FROM t_board A "
-				+ " INNER JOIN t_user B "
-				+ " ON A.uid = B.uid "
-				+ " ORDER BY i_board DESC "
-				+ " LIMIT ?, ? ";
+		String query = " SELECT " + 
+				"  A.i_board, A.title, A.regdatetime, A.cnt, C.nm " + 
+				" , ifnull(B.cnt, 0) as favorite_cnt " + 
+				" FROM t_board A " + 
+				" LEFT JOIN ( " + 
+				"	SELECT i_board, COUNT(i_board) AS cnt " + 
+				"	FROM t_favorite " + 
+				"	GROUP BY i_board " + 
+				" ) B " + 
+				" ON A.i_board = B.i_board " + 
+				" INNER JOIN t_user C " + 
+				" ON A.uid = C.uid " + 
+				" ORDER BY A.i_board DESC " +
+				" LIMIT ?, ? ";
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -69,12 +76,14 @@ public class BoardDAO {
 				String regDateTime = rs.getString("regdatetime");
 				int cnt = rs.getInt("cnt");
 				String nm = rs.getString("nm");
+				int favorite = rs.getInt("favorite_cnt");
 				
 				vo.setI_board(i_board);
 				vo.setTitle(title);
 				vo.setRegDateTime(regDateTime);
 				vo.setCnt(cnt);
 				vo.setNm(nm);
+				vo.setFavorite(favorite);
 				
 				list.add(vo);
 			}
