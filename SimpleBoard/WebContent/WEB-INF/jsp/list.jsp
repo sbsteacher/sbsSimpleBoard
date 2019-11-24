@@ -46,6 +46,14 @@
 		border: 1px solid black;
 	}
 	
+	.content {
+		cursor: pointer;
+	}
+	
+	table tr.content:hover {
+		background-color: #CAD3C8;
+	}
+	
 </style>
 </head>
 <body>
@@ -69,9 +77,9 @@
 		</tr>
 		<% if(data != null) { %>
 			<% for(BoardVo vo : data) { %>
-				<tr>
+				<tr class="content" onclick="goDetail(<%=vo.getI_board()%>, <%=p %>)">
 					<td><%=vo.getI_board() %></td>
-					<td><a href="detail?i_board=<%=vo.getI_board()%>&p=<%=p %>"><%=vo.getTitle() %></a></td>
+					<td><%=vo.getTitle() %></td>
 					<td><%=vo.getNm() %></td>
 					<td><%=vo.getRegDateTime() %></td>
 					<td class="center"><%=vo.getCnt() %></td>
@@ -93,8 +101,20 @@
 			</span>&nbsp;&nbsp;
 		<% } %>
 	</div>
+	<script>
+		function goDetail(i_board, page) {
+			location.href='detail?i_board=' + i_board + '&p=' + page 
+		}
+	</script>
 </body>
 </html>
+
+
+
+
+
+
+
 
 
 
