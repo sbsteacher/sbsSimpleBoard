@@ -5,13 +5,7 @@
 	BoardVO vo = (BoardVO)request.getAttribute("vo");
 	String msg = (String)request.getAttribute("msg");
 %>    
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>수정</title>
-</head>
-<body>
+
 	<h1>수정 화면</h1>
 	<% if(msg != null) { %>
 		<div><%=msg %></div>
@@ -41,8 +35,6 @@
 			}
 		}
 	</script>
-</body>
-</html>
 
 
 

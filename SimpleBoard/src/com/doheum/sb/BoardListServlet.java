@@ -25,6 +25,10 @@ public class BoardListServlet extends LoginNeedServlet {
 		System.out.println("list!!!");		
 		HttpSession session = request.getSession();		
 		UserVO loginUser = (UserVO)session.getAttribute("loginUser");		
+		Integer p = (Integer)session.getAttribute("p");
+		
+	
+		
 		if(loginUser == null) {
 			response.sendRedirect("login");
 			return;
@@ -33,9 +37,10 @@ public class BoardListServlet extends LoginNeedServlet {
 		String strPage = request.getParameter("page");
 		if(strPage == null) {
 			strPage = "1";
-		}
-		
-		int page = Integer.parseInt(strPage);
+			
+		}		
+		int page = Integer.parseInt(strPage);		
+		session.setAttribute("p", page);
 		System.out.println("page : " + page);
 		 
 		int showCnt = 5;
@@ -46,7 +51,10 @@ public class BoardListServlet extends LoginNeedServlet {
 		int totalPagingCnt = BoardDAO.getTotalPagingCnt(showCnt);
 		request.setAttribute("totalPagingCnt", totalPagingCnt);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/jsp/list.jsp");
+		request.setAttribute("title", "리스트");
+		request.setAttribute("target", "list");
+		
+		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/jsp/template.jsp");
 		rd.forward(request, response);
 		
 	}

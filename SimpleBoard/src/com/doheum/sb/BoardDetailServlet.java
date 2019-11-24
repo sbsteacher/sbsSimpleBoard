@@ -54,7 +54,10 @@ public class BoardDetailServlet extends LoginNeedServlet {
 				
 		BoardVO vo = BoardDAO.getBoardDetail(param);
 		request.setAttribute("vo", vo);
-		request.getRequestDispatcher("WEB-INF/jsp/detail.jsp").forward(request, response);
+		
+		request.setAttribute("title", "디테일");
+		request.setAttribute("target", "detail");
+		request.getRequestDispatcher("WEB-INF/jsp/template.jsp").forward(request, response);
 	}	
 	
 	//댓글달기

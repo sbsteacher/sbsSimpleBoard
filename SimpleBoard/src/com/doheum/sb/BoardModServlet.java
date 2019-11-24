@@ -38,7 +38,10 @@ public class BoardModServlet extends LoginNeedServlet {
 			vo = BoardDAO.getBoardDetail(param);
 			request.setAttribute("vo", vo);
 		}		
-		request.getRequestDispatcher("WEB-INF/jsp/mod.jsp").forward(request, response);
+		
+		request.setAttribute("title", "글수정");
+		request.setAttribute("target", "mod");
+		request.getRequestDispatcher("WEB-INF/jsp/template.jsp").forward(request, response);
 	}
 
 	//수정하기

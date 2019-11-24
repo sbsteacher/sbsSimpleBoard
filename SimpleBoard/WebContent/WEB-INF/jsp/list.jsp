@@ -10,13 +10,7 @@
     	if(p == null) {
     		p = "1";
     	}
-    %>    
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>게시판</title>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    %>
 <style>	
 	#contentTitle {
 		background-color: black;
@@ -55,19 +49,8 @@
 		background-color: #CAD3C8;
 	}
 	
-</style>
-</head>
-<body>
-	<div>
-		${loginUser.nm}님 환영합니다.
-		<a href="logout">로그아웃</a>
-	</div>
-	<div id="contentTitle">보드 리스트</div>
-	<div>
-		<a href="write?p=<%=p%>">
-			<button>글쓰기</button>
-		</a>
-	</div>
+</style>	
+	<div id="contentTitle">보드 리스트</div>	
 	<table>
 		<tr>
 			<th>번호</th>
@@ -75,6 +58,7 @@
 			<th>글쓴이</th>
 			<th>날짜</th>
 			<th>조회수</th>
+			<th>좋아요</th>
 		</tr>
 		<%
 			if(data != null) {
@@ -88,6 +72,7 @@
 					<td><%=vo.getNm() %></td>
 					<td><%=vo.getRegDateTime() %></td>
 					<td class="center"><%=vo.getCnt() %></td>
+					<td class="center"><%=vo.getFavorite() %></td>
 				</tr>				
 			<% } %>
 		<% } %>
@@ -111,17 +96,3 @@
 			location.href='detail?i_board=' + i_board + '&p=' + page 
 		}
 	</script>
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-

@@ -20,7 +20,11 @@ public class BoardWriteServlet extends LoginNeedServlet {
 	protected void doGetProc(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String title = request.getParameter("title");
 		System.out.println("title : " + title);
-		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/jsp/write.jsp");
+		
+		request.setAttribute("title", "글쓰기");
+		request.setAttribute("target", "write");
+		
+		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/jsp/template.jsp");
 		rd.forward(request, response);
 	}
 

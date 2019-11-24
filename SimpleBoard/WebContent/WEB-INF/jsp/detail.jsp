@@ -6,20 +6,10 @@
 	BoardVO vo = (BoardVO)request.getAttribute("vo");
 	String msg = (String)request.getAttribute("msg");
 	List<CommentVO> cmtList = (List<CommentVO>) request.getAttribute("cmtList");
-	String p = request.getParameter("p");
 	
 	UserVO loginUser = (UserVO)session.getAttribute("loginUser");
-%>    
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>디테일</title>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<style>
-	body {
-		padding: 20px;
-	}
+%>
+<style>	
 	table {
 		width: 100%;
 		border-collapse: collapse;
@@ -35,11 +25,9 @@
 		color: red;
 	}
 </style>
-</head>
-<body>
-	<a href="list?page=<%=p%>">
-		<button>리스트로 돌아가기</button>
-	</a>
+<a href="list?page=${p}">
+	<button>리스트로 돌아가기</button>
+</a>
 <% if(vo == null) { %>
 	<div>오류가 발생하였습니다.</div>	
 <% } else { %>
@@ -139,8 +127,7 @@
 		}
 	}
 </script>
-</body>
-</html>
+
 
 
 
