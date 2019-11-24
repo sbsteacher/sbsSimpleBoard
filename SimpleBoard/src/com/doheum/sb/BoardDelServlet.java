@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.doheum.sb.dao.BoardDAO;
+import com.doheum.sb.vo.BoardVO;
+import com.doheum.sb.vo.UserVO;
 
 @WebServlet("/del")
 public class BoardDelServlet extends LoginNeedServlet {
@@ -31,7 +33,7 @@ public class BoardDelServlet extends LoginNeedServlet {
 			return;
 		}
 		
-		BoardVo param = new BoardVo();
+		BoardVO param = new BoardVO();
 		param.setI_board(i_board);
 		param.setUid(uid);
 		

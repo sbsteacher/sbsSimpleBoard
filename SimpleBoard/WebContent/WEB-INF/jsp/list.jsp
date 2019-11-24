@@ -1,21 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
-<%@ page import="com.doheum.sb.*" %>    
+<%@ page import="com.doheum.sb.vo.*" %>    
 <%
-	List<BoardVo> data = (List<BoardVo>)request.getAttribute("data");
-	int totalPagingCnt = (int)request.getAttribute("totalPagingCnt");
-	
-	String p = request.getParameter("page");
-	if(p == null) {
-		p = "1";
-	}
-%>    
+    	List<BoardVO> data = (List<BoardVO>)request.getAttribute("data");
+    	int totalPagingCnt = (int)request.getAttribute("totalPagingCnt");
+    	
+    	String p = request.getParameter("page");
+    	if(p == null) {
+    		p = "1";
+    	}
+    %>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>게시판</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <style>	
 	#contentTitle {
 		background-color: black;
@@ -63,7 +64,7 @@
 	</div>
 	<div id="contentTitle">보드 리스트</div>
 	<div>
-		<a href="write?p=<%=p %>">
+		<a href="write?p=<%=p%>">
 			<button>글쓰기</button>
 		</a>
 	</div>
@@ -75,8 +76,12 @@
 			<th>날짜</th>
 			<th>조회수</th>
 		</tr>
-		<% if(data != null) { %>
-			<% for(BoardVo vo : data) { %>
+		<%
+			if(data != null) {
+		%>
+			<%
+				for(BoardVO vo : data) {
+			%>
 				<tr class="content" onclick="goDetail(<%=vo.getI_board()%>, <%=p %>)">
 					<td><%=vo.getI_board() %></td>
 					<td><%=vo.getTitle() %></td>

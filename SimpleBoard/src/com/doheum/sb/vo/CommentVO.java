@@ -1,6 +1,6 @@
-package com.doheum.sb;
+package com.doheum.sb.vo;
 
-public class CommentVo {
+public class CommentVO {
 	private int i_comment;
 	private int i_board;
 	private String cmt;

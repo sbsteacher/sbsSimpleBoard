@@ -1,4 +1,4 @@
-package com.doheum.sb;
+package com.doheum.sb.vo;
 
 public class LoginResultVO {
 	private int result;

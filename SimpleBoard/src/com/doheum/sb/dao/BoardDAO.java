@@ -1,21 +1,21 @@
 package com.doheum.sb.dao;
 
+import static com.doheum.sb.dao.CommonAPI.close;
+import static com.doheum.sb.dao.CommonAPI.getCon;
+
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.doheum.sb.BoardVo;
-import com.doheum.sb.CommentVo;
-import static com.doheum.sb.dao.CommonAPI.getCon;
-import static com.doheum.sb.dao.CommonAPI.close;
+import com.doheum.sb.vo.BoardVO;
+import com.doheum.sb.vo.CommentVO;
+import com.doheum.sb.vo.FavoriteVO;
 
 public class BoardDAO {	
 	// 글쓰기
-	public static int insertBoard(BoardVo vo) {
+	public static int insertBoard(BoardVO vo) {
 		int result = 0;
 		String query = " INSERT INTO t_board (title, content, uid) "
 							+ " VALUES (?, ?, ?) ";
@@ -40,8 +40,8 @@ public class BoardDAO {
 	}
 
 	// 글 리스트 가져오기
-	public static List<BoardVo> getBoardList(int sIdx, int showCnt) {
-		List<BoardVo> list = new ArrayList();
+	public static List<BoardVO> getBoardList(int sIdx, int showCnt) {
+		List<BoardVO> list = new ArrayList();
 		
 		String query = " SELECT A.i_board, A.title, A.content "
 				+ " , A.regdatetime, A.cnt, B.nm "
@@ -63,7 +63,7 @@ public class BoardDAO {
 			rs = ps.executeQuery();
 						
 			while (rs.next()) {
-				BoardVo vo = new BoardVo();
+				BoardVO vo = new BoardVO();
 				int i_board = rs.getInt("i_board");
 				String title = rs.getString("title");
 				String regDateTime = rs.getString("regdatetime");
@@ -119,13 +119,16 @@ public class BoardDAO {
 	}
 
 	// 글 디테일 가져오기
-	public static BoardVo getBoardDetail(int i_board) {
-		BoardVo vo = new BoardVo();
-		String query = " SELECT A.*, B.nm " + 
+	public static BoardVO getBoardDetail(BoardVO param) {
+		BoardVO vo = new BoardVO();
+		String query = " SELECT A.*, B.nm, IFNULL(C.i_board, 0) AS favorite " + 
 				" FROM t_board A " + 
 				" INNER JOIN t_user B " + 
-				" ON A.uid = B.uid " + 
-				" WHERE i_board = ? ";
+				" ON A.uid = B.uid " +
+				" LEFT JOIN t_favorite C "	 +
+				" ON A.i_board = C.i_board " +
+				" AND C.uid = ? " +
+				" WHERE A.i_board = ? ";
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -133,8 +136,10 @@ public class BoardDAO {
 
 		try {
 			con = getCon();
-			ps = con.prepareStatement(query);
-			ps.setInt(1, i_board);
+			ps = con.prepareStatement(query);			
+			ps.setString(1, param.getUid());
+			ps.setInt(2, param.getI_board());
+			
 			rs = ps.executeQuery();
 			while(rs.next()) {
 				String title = rs.getString("title");
@@ -143,14 +148,16 @@ public class BoardDAO {
 				int cnt = rs.getInt("cnt");
 				String uid = rs.getString("uid"); //detail.jsp 에서 수정, 삭제 버튼 나타나게 할지 안할지 결정하기 위한 값
 				String nm = rs.getString("nm");
+				int favorite = rs.getInt("favorite");
 				
-				vo.setI_board(i_board);
+				vo.setI_board(param.getI_board());
 				vo.setTitle(title);
 				vo.setContent(content);
 				vo.setRegDateTime(regDateTime);
 				vo.setCnt(cnt);
 				vo.setUid(uid);
 				vo.setNm(nm);
+				vo.setFavorite(favorite);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -162,7 +169,7 @@ public class BoardDAO {
 	}
 
 	// 글삭제
-	public static int delBoard(BoardVo param) {
+	public static int delBoard(BoardVO param) {
 		int result = 0; // 디폴트 삭제 못 했다
 
 		Connection con = null;
@@ -189,7 +196,7 @@ public class BoardDAO {
 	}
 
 	// 글수정
-	public static int modBoard(BoardVo vo) {
+	public static int modBoard(BoardVO vo) {
 		int result = 0; // 0은 수정 실패 값
 
 		Connection con = null;
@@ -238,7 +245,7 @@ public class BoardDAO {
 		}
 	}
 	
-	public static void insertComment(CommentVo vo) {
+	public static void insertComment(CommentVO vo) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		
@@ -263,8 +270,8 @@ public class BoardDAO {
 	}
 	
 	//댓글 리스트 가져오기
-	public static List<CommentVo> getCommentList(int i_board) {
-		List<CommentVo> list = new ArrayList();
+	public static List<CommentVO> getCommentList(int i_board) {
+		List<CommentVO> list = new ArrayList();
 		
 		String query = " SELECT A.i_comment, A.cmt, A.r_datetime, B.uid, B.nm " 
 				+	" FROM t_comment A "
@@ -284,7 +291,7 @@ public class BoardDAO {
 			rs = ps.executeQuery();
 						
 			while (rs.next()) {
-				CommentVo vo = new CommentVo();				
+				CommentVO vo = new CommentVO();				
 				vo.setI_comment(rs.getInt("i_comment"));
 				vo.setCmt(rs.getString("cmt"));
 				vo.setR_datetime(rs.getString("r_datetime"));
@@ -301,7 +308,7 @@ public class BoardDAO {
 		return list;
 	}
 	
-	public static int delComment(CommentVo vo) {
+	public static int delComment(CommentVO vo) {
 		int result = 0;
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -324,6 +331,59 @@ public class BoardDAO {
 		
 		return result;
 	}	
+	
+	//해당 글에 좋아요 되어 있는지 없는지 리턴 해주는 메소드
+	public static boolean isFavorite(FavoriteVO param) {
+		boolean result = false;
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		String sql = " SELECT * FROM t_favorite WHERE i_board = ? AND uid = ? ";
+		
+		try {
+			con = getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, param.getI_board());
+			ps.setString(2,  param.getUid());
+			
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				result = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(con, ps, rs);
+		}
+		
+		return result;
+	}
+	
+	public static void regdelFavorite(boolean isFavorite, FavoriteVO param) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		String sql = " INSERT INTO t_favorite (i_board, uid) VALUES (?, ?) ";
+		
+		if(isFavorite) {
+			sql = " DELETE FROM t_favorite WHERE i_board = ? AND uid = ? ";
+		}
+		
+		try {
+			con = getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, param.getI_board());
+			ps.setString(2, param.getUid());
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(con, ps);
+		}
+	}
 }
 
 

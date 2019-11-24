@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.doheum.sb.dao.BoardDAO;
+import com.doheum.sb.vo.BoardVO;
+import com.doheum.sb.vo.UserVO;
 
 @WebServlet("/mod")
 public class BoardModServlet extends LoginNeedServlet {
@@ -27,10 +29,13 @@ public class BoardModServlet extends LoginNeedServlet {
 		String str_board = request.getParameter("i_board");
 		int i_board = Utils.parseStringToInt(str_board);
 		
-		BoardVo vo = (BoardVo)request.getAttribute("vo");
+		BoardVO vo = (BoardVO)request.getAttribute("vo");
 		
 		if(vo == null) {
-			vo = BoardDAO.getBoardDetail(i_board);
+			BoardVO param = new BoardVO();
+			param.setI_board(i_board);
+			
+			vo = BoardDAO.getBoardDetail(param);
 			request.setAttribute("vo", vo);
 		}		
 		request.getRequestDispatcher("WEB-INF/jsp/mod.jsp").forward(request, response);
@@ -43,7 +48,7 @@ public class BoardModServlet extends LoginNeedServlet {
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
 		
-		BoardVo vo = new BoardVo(i_board, title, content);
+		BoardVO vo = new BoardVO(i_board, title, content);
 		int result = BoardDAO.modBoard(vo);
 		
 		if(result == 0) { //수정 실패 (수정 화면으로 이동)

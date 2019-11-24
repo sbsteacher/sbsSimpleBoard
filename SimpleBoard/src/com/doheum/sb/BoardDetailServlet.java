@@ -5,12 +5,14 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.doheum.sb.dao.BoardDAO;
+import com.doheum.sb.vo.BoardVO;
+import com.doheum.sb.vo.CommentVO;
+import com.doheum.sb.vo.UserVO;
 
 @WebServlet("/detail")
 public class BoardDetailServlet extends LoginNeedServlet {
@@ -24,7 +26,7 @@ public class BoardDetailServlet extends LoginNeedServlet {
 		
 		int i_board = Integer.parseInt(str_board);
 		
-		List<CommentVo> list = BoardDAO.getCommentList(i_board);
+		List<CommentVO> list = BoardDAO.getCommentList(i_board);
 		request.setAttribute("cmtList", list);
 		
 		//request.setAttribute("commentList", SBDao.getCommentList(i_board));
@@ -42,8 +44,15 @@ public class BoardDetailServlet extends LoginNeedServlet {
 				BoardDAO.plusCnt(i_board);	
 			}
 		}
+		
+		HttpSession session = request.getSession();		
+		UserVO loginUser = (UserVO)session.getAttribute("loginUser"); 
+		
+		BoardVO param = new BoardVO();
+		param.setI_board(i_board);
+		param.setUid(loginUser.getUid());
 				
-		BoardVo vo = BoardDAO.getBoardDetail(i_board);
+		BoardVO vo = BoardDAO.getBoardDetail(param);
 		request.setAttribute("vo", vo);
 		request.getRequestDispatcher("WEB-INF/jsp/detail.jsp").forward(request, response);
 	}	
@@ -55,7 +64,7 @@ public class BoardDetailServlet extends LoginNeedServlet {
 		//누가 작성하는 글인지 uid값을 세팅!!
 		HttpSession session = request.getSession();
 		UserVO loginUser = (UserVO)session.getAttribute("loginUser");	
-		CommentVo vo = new CommentVo();
+		CommentVO vo = new CommentVO();
 		
 		if(str_comment.equals("0")) { //댓글 등록
 			String str_board = request.getParameter("i_board");		

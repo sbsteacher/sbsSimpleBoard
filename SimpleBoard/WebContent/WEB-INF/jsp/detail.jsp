@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.doheum.sb.*" %>
+<%@ page import="com.doheum.sb.vo.*" %>
 <%@ page import="java.util.*" %>
 <%
-	BoardVo vo = (BoardVo)request.getAttribute("vo");
+	BoardVO vo = (BoardVO)request.getAttribute("vo");
 	String msg = (String)request.getAttribute("msg");
-	List<CommentVo> cmtList = (List<CommentVo>) request.getAttribute("cmtList");
+	List<CommentVO> cmtList = (List<CommentVO>) request.getAttribute("cmtList");
 	String p = request.getParameter("p");
 	
 	UserVO loginUser = (UserVO)session.getAttribute("loginUser");
@@ -15,6 +15,7 @@
 <head>
 <meta charset="UTF-8">
 <title>디테일</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <style>
 	body {
 		padding: 20px;
@@ -28,10 +29,15 @@
 	th, td {
 		border: 1px solid #000;
 	}
+	
+	.material-icons {
+		cursor: pointer;
+		color: red;
+	}
 </style>
 </head>
 <body>
-	<a href="list?page=<%=p %>">
+	<a href="list?page=<%=p%>">
 		<button>리스트로 돌아가기</button>
 	</a>
 <% if(vo == null) { %>
@@ -40,33 +46,42 @@
 	<table>
 		<tr>
 			<th>제목</th>
-			<td colspan="5"><%=vo.getTitle() %></td>
+			<td colspan="4"><%=vo.getTitle()%></td>
+			<td>
+				<a href="favorite?i_board=<%=vo.getI_board()%>">
+					<% if(vo.getFavorite() == 0) { %>
+					<i class="material-icons">favorite_border</i>
+					<% } else { %>
+					<i class="material-icons">favorite</i>
+					<% } %>
+				</a>
+			</td>
 		</tr>
 		<tr>
 			<td>날짜</td>
-			<td><%=vo.getRegDateTime() %></td>
+			<td><%=vo.getRegDateTime()%></td>
 			<td>조회수</td>
-			<td><%=vo.getCnt() %></td>
+			<td><%=vo.getCnt()%></td>
 			<td>작성자</td>
-			<td><%=vo.getNm() %></td>
+			<td><%=vo.getNm()%></td>
 		</tr>
 		<tr>
-			<td colspan="6"><%=vo.getContent() %></td>
+			<td colspan="6"><%=vo.getContent()%></td>
 		</tr>
-		<% if(vo.getUid().equals(loginUser.getUid())) { %>
+		<% if(vo.getUid().equals(loginUser.getUid())) { 	%>
 		<tr>
 			<td colspan="3">
-				<a href="del?i_board=<%=vo.getI_board() %>">삭제</a>
+				<a href="del?i_board=<%=vo.getI_board()%>">삭제</a>
 			</td>
 			<td colspan="3">
-				<a href="mod?i_board=<%=vo.getI_board() %>">수정</a>
+				<a href="mod?i_board=<%=vo.getI_board()%>">수정</a>
 			</td>
 		</tr>
 		<% } %>
-		<% if(msg != null) { %>
+		<% if(msg != null) { 	%>
 		<tr>
 			<td>메시지</td>
-			<td colspan="3"><%=msg %></td>
+			<td colspan="3"><%=msg%></td>
 		</tr>
 		<% } %>
 	</table>	
@@ -74,7 +89,7 @@
 		<!-- action을 생략하면 현재 주소창에 적혀있는 주소로 post를 날립니다. -->
 		<form method="post" id="frm" onsubmit="return check()">
 			<input type="hidden" name="i_comment" value="0">
-			<input type="hidden" name="i_board" value="<%=vo.getI_board() %>">
+			<input type="hidden" name="i_board" value="<%=vo.getI_board()%>">
 			<div>			
 				댓글 : <input type="text" name="comment">
 				<input type="submit" value="댓글달기">
@@ -92,7 +107,7 @@
 				<th>등록일시</th>
 				<th>삭제</th>
 			</tr>			
-			<% for(CommentVo cmtVo : cmtList) { %>
+			<% for(CommentVO cmtVo : cmtList) { %>
 			<tr>
 				<td><%=cmtVo.getI_comment() %></td>
 				<td><%=cmtVo.getCmt() %></td>
@@ -107,8 +122,7 @@
 			<% } %>
 		</table>
 	</div>	
-	<% } %>
-	
+	<% } %>	
 <% } %>
 <script>
 	//댓글삭제

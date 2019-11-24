@@ -8,8 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLIntegrityConstraintViolationException;
 
-import com.doheum.sb.LoginResultVO;
-import com.doheum.sb.UserVO;
+import com.doheum.sb.vo.LoginResultVO;
+import com.doheum.sb.vo.UserVO;
 import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
 
 

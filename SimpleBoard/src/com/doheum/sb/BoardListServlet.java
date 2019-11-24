@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.doheum.sb.dao.BoardDAO;
+import com.doheum.sb.vo.BoardVO;
+import com.doheum.sb.vo.UserVO;
 
 @WebServlet("/list")
 public class BoardListServlet extends LoginNeedServlet {
@@ -38,7 +40,7 @@ public class BoardListServlet extends LoginNeedServlet {
 		 
 		int showCnt = 5;
 		int sIdx = (page - 1) * showCnt;
-		List<BoardVo> list = BoardDAO.getBoardList(sIdx, showCnt);
+		List<BoardVO> list = BoardDAO.getBoardList(sIdx, showCnt);
 		request.setAttribute("data", list);		
 			
 		int totalPagingCnt = BoardDAO.getTotalPagingCnt(showCnt);

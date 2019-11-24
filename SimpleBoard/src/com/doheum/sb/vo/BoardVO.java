@@ -1,6 +1,6 @@
-package com.doheum.sb;
+package com.doheum.sb.vo;
 
-public class BoardVo {
+public class BoardVO {
 	private int i_board;
 	private String title;
 	private String content;
@@ -8,25 +8,26 @@ public class BoardVo {
 	private int cnt;
 	private String uid;
 	private String nm;
+	private int favorite;
 	
-	public BoardVo() {}
+	public BoardVO() {}
 	
-	public BoardVo(String title, String content) {
+	public BoardVO(String title, String content) {
 		this(0, title, content, null);
 	}
 	
-	public BoardVo(int i_board, String title, String content) {
+	public BoardVO(int i_board, String title, String content) {
 		this(i_board, title, content, null);
 	}
 	
-	public BoardVo(int i_board, String title, String content, String regDateTime) {	
+	public BoardVO(int i_board, String title, String content, String regDateTime) {	
 		this.i_board = i_board;
 		this.title = title;
 		this.content = content;
 		this.regDateTime = regDateTime;
 	}
 	
-	public BoardVo(int i_board, String title, String content, String regDateTime, int cnt) {
+	public BoardVO(int i_board, String title, String content, String regDateTime, int cnt) {
 		super();
 		this.i_board = i_board;
 		this.title = title;
@@ -34,7 +35,15 @@ public class BoardVo {
 		this.regDateTime = regDateTime;
 		this.cnt = cnt;
 	}
-		
+			
+	public int getFavorite() {
+		return favorite;
+	}
+
+	public void setFavorite(int favorite) {
+		this.favorite = favorite;
+	}
+
 	public String getNm() {
 		return nm;
 	}

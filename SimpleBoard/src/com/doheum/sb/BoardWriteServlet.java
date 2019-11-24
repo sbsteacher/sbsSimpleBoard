@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.doheum.sb.dao.BoardDAO;
+import com.doheum.sb.vo.BoardVO;
+import com.doheum.sb.vo.UserVO;
 
 @WebServlet("/write")
 public class BoardWriteServlet extends LoginNeedServlet {
@@ -33,7 +35,7 @@ public class BoardWriteServlet extends LoginNeedServlet {
 		
 		//int, char, float, byte, short, boolean, double 
 		
-		BoardVo vo = new BoardVo(title, content);
+		BoardVO vo = new BoardVO(title, content);
 		
 		//누가 작성하는 글인지 uid값을 세팅!!
 		HttpSession session = request.getSession();

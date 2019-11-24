@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.doheum.sb.dao.UserDAO;
+import com.doheum.sb.vo.LoginResultVO;
+import com.doheum.sb.vo.UserVO;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {

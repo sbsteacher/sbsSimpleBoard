@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.doheum.sb.dao.UserDAO;
+import com.doheum.sb.vo.UserVO;
 
 @WebServlet("/join")
 public class JoinServlet extends HttpServlet {

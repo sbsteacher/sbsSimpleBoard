@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.doheum.sb.*" %>
+<%@ page import="com.doheum.sb.vo.*" %>
 <%
-	BoardVo vo = (BoardVo)request.getAttribute("vo");
+	BoardVO vo = (BoardVO)request.getAttribute("vo");
 	String msg = (String)request.getAttribute("msg");
 %>    
 <!DOCTYPE html>
