@@ -8,8 +8,8 @@
 
 	if(vo == null) {
 		vo = new UserVO();		
-		vo.setUid("");
-		vo.setUpw("");
+		vo.setUid("mic");
+		vo.setUpw("1212");
 	}
 %>    
 <!DOCTYPE html>

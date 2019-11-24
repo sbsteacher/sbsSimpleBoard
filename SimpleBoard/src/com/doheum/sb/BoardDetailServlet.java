@@ -52,6 +52,11 @@ public class BoardDetailServlet extends LoginNeedServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String str_comment = request.getParameter("i_comment");
 		
+		//누가 작성하는 글인지 uid값을 세팅!!
+		HttpSession session = request.getSession();
+		UserVO loginUser = (UserVO)session.getAttribute("loginUser");	
+		CommentVo vo = new CommentVo();
+		
 		if(str_comment.equals("0")) { //댓글 등록
 			String str_board = request.getParameter("i_board");		
 			int i_board = Utils.parseStringToInt(str_board);
@@ -64,20 +69,23 @@ public class BoardDetailServlet extends LoginNeedServlet {
 			String cmt = request.getParameter("comment");
 			System.out.println("cmt : " + cmt);
 			System.out.println("i_board : " + i_board);		
-			CommentVo vo = new CommentVo();
-			vo.setI_board(i_board);
-			vo.setCmt(cmt);
 			
-			//누가 작성하는 글인지 uid값을 세팅!!
-			HttpSession session = request.getSession();
-			UserVO loginUser = (UserVO)session.getAttribute("loginUser");			
+			vo.setI_board(i_board);
+			vo.setCmt(cmt);				
 			vo.setUid(loginUser.getUid());
 			
 			BoardDAO.insertComment(vo);
 		} else { //댓글 삭제
-			int i_comment = Integer.parseInt(str_comment);
 			
-			BoardDAO.delComment(i_comment);
+			int i_comment = Integer.parseInt(str_comment);	
+			vo.setI_comment(i_comment);
+			vo.setUid(loginUser.getUid());
+			
+			int result = BoardDAO.delComment(vo);
+			
+			if(result == 0) {
+				request.setAttribute("msg", "댓글을 삭제할 수 없습니다.");
+			}
 		}
 		
 		request.setAttribute("post", "");

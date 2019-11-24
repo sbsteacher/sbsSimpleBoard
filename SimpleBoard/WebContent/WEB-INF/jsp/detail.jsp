@@ -98,7 +98,11 @@
 				<td><%=cmtVo.getCmt() %></td>
 				<td><%=cmtVo.getNm() %></td>
 				<td><%=cmtVo.getR_datetime() %></td>
-				<td><button onclick="delCmt(<%=cmtVo.getI_comment() %>)">삭제</button></td>
+				<td>
+					<% if(loginUser.getUid().equals(cmtVo.getUid())) { %>
+					<button onclick="delCmt(<%=cmtVo.getI_comment() %>)">삭제</button>
+					<% } %>
+				</td>
 			</tr>
 			<% } %>
 		</table>

@@ -266,7 +266,7 @@ public class BoardDAO {
 	public static List<CommentVo> getCommentList(int i_board) {
 		List<CommentVo> list = new ArrayList();
 		
-		String query = " SELECT A.i_comment, A.cmt, A.r_datetime, B.nm " 
+		String query = " SELECT A.i_comment, A.cmt, A.r_datetime, B.uid, B.nm " 
 				+	" FROM t_comment A "
 				+ " INNER JOIN t_user B "
 				+ " ON A.uid = B.uid "
@@ -289,6 +289,7 @@ public class BoardDAO {
 				vo.setCmt(rs.getString("cmt"));
 				vo.setR_datetime(rs.getString("r_datetime"));
 				vo.setNm(rs.getString("nm"));
+				vo.setUid(rs.getString("uid"));
 				list.add(vo);
 			}
 		} catch (Exception e) {
@@ -300,18 +301,19 @@ public class BoardDAO {
 		return list;
 	}
 	
-	public static void delComment(int i_cmt) {
+	public static int delComment(CommentVo vo) {
+		int result = 0;
 		Connection con = null;
 		PreparedStatement ps = null;
 
-		String query = " DELETE FROM t_comment WHERE i_comment = ? ";
+		String query = " DELETE FROM t_comment WHERE i_comment = ? AND uid = ? ";
 
 		try {
 			con = getCon();
 			ps = con.prepareStatement(query);
-			ps.setInt(1, i_cmt);
-			
-			ps.executeUpdate();
+			ps.setInt(1, vo.getI_comment());
+			ps.setString(2, vo.getUid());
+			result = ps.executeUpdate();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -319,6 +321,8 @@ public class BoardDAO {
 		} finally {
 			close(con, ps);
 		}
+		
+		return result;
 	}	
 }
 
