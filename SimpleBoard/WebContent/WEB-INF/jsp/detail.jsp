@@ -10,17 +10,7 @@
 	UserVO loginUser = (UserVO)session.getAttribute("loginUser");
 	PrevNextVO pnvo = (PrevNextVO)request.getAttribute("pnvo"); 
 %>
-<style>	
-	table {
-		width: 100%;
-		border-collapse: collapse;
-		border: 1px solid #000;
-	}
-	
-	th, td {
-		border: 1px solid #000;
-	}
-	
+<style>
 	.material-icons {
 		cursor: pointer;
 		color: red;
@@ -64,6 +54,12 @@
 			</td>
 			<td colspan="3">
 				<a href="mod?i_board=<%=vo.getI_board()%>">수정</a>
+			</td>
+		</tr>
+		<% } else { %>
+		<tr>
+			<td colspan="6">
+				<a href="write?grp=${vo.grp}&seq=${vo.seq}&floor=${vo.floor}"><button>답글 달기</button></a>
 			</td>
 		</tr>
 		<% } %>

@@ -1,10 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	String grp = request.getParameter("grp");
+	String seq = request.getParameter("seq");
+	String floor = request.getParameter("floor");
+	
+	if(grp == null) grp = "0";
+	if(seq == null) seq = "0";
+	if(floor == null) floor = "0";
+%>    
 	<h1>글쓰기 화면</h1>
 	<a href="list?page=${p}">
 		<button>리스트로 돌아가기</button>
 	</a>
 	<form action="write" method="post" onsubmit="return check()">
+		<input type="hidden1" name="grp" value="<%=grp %>">
+		<input type="hidden1" name="seq" value="<%=seq %>">
+		<input type="hidden1" name="floor" value="<%=floor %>">
 		<div>
 			제목 : <input type="text" name="title" id="title"> 
 		</div>

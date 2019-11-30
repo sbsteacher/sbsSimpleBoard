@@ -18,8 +18,8 @@ public class BoardDAO {
 	// 글쓰기
 	public static int insertBoard(BoardVO vo) {
 		int result = 0;
-		String query = " INSERT INTO t_board (title, content, uid) "
-							+ " VALUES (?, ?, ?) ";
+		String query = " INSERT INTO t_board (grp, seq, floor, title, content, uid) "
+							+ " VALUES (?, ?, ?, ?, ?, ?) ";
 		Connection con = null;
 		PreparedStatement ps = null;
 		try {
@@ -38,6 +38,24 @@ public class BoardDAO {
 		}
 
 		return result;
+	}
+	
+	public static void updGrp() {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		String sql = " UPDATE t_board SET grp = i_board WHERE grp = 0 ";
+		
+		try {
+			con = getCon();
+			ps = con.prepareStatement(sql);
+			ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(con, ps);
+		}
 	}
 
 	// 글 리스트 가져오기
@@ -149,9 +167,12 @@ public class BoardDAO {
 			ps = con.prepareStatement(query);			
 			ps.setString(1, param.getUid());
 			ps.setInt(2, param.getI_board());
-			
 			rs = ps.executeQuery();
+			
 			while(rs.next()) {
+				int grp = rs.getInt("grp");
+				int seq = rs.getInt("seq");
+				int floor = rs.getInt("floor");
 				String title = rs.getString("title");
 				String content = rs.getString("content");
 				String regDateTime = rs.getString("regdatetime");
@@ -159,8 +180,11 @@ public class BoardDAO {
 				String uid = rs.getString("uid"); //detail.jsp 에서 수정, 삭제 버튼 나타나게 할지 안할지 결정하기 위한 값
 				String nm = rs.getString("nm");
 				int favorite = rs.getInt("favorite");
-				
+
 				vo.setI_board(param.getI_board());
+				vo.setGrp(grp);
+				vo.setSeq(seq);
+				vo.setFloor(floor);
 				vo.setTitle(title);
 				vo.setContent(content);
 				vo.setRegDateTime(regDateTime);

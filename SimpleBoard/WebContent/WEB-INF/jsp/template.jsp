@@ -67,6 +67,13 @@ footer {
 
 table {
 	width: 70%;
+	border-collapse: collapse;
+	border: 1px solid #000;
+}
+
+th, td {
+	border: 1px solid #000;
+	padding: 10px;
 }
 
 </style>
@@ -77,7 +84,7 @@ table {
 			<nav>				
 				  <ul>
 				      <li><a class="active" href="list?page=${p}">Home</a></li>
-				      <li><a href="write?p=${p}">글쓰기</a></li>
+				      <li><a href="write?grp=0&seq=0&floor=0">글쓰기</a></li>
 				      <li><a href="#contact">Contact</a></li>
 				      <li><a href="logout">Logout</a></li>
 				  </ul>

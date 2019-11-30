@@ -30,6 +30,9 @@ public class BoardWriteServlet extends LoginNeedServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		System.out.println("-- doPost --");
+		String grp = request.getParameter("grp");
+		String seq = request.getParameter("seq");
+		String floor = request.getParameter("floor");
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
 		//int intContent = Integer.parseInt(content);
@@ -45,8 +48,17 @@ public class BoardWriteServlet extends LoginNeedServlet {
 		HttpSession session = request.getSession();
 		UserVO loginUser = (UserVO)session.getAttribute("loginUser");
 		vo.setUid(loginUser.getUid());
+		vo.setGrp(Integer.parseInt(grp));
+		vo.setSeq(Integer.parseInt(seq));
+		vo.setFloor(Integer.parseInt(floor));
 		
-		int result = BoardDAO.insertBoard(vo); //여러분들은 주석처리 할 필요 없음!!
+		if(grp.equals("0")) {
+			BoardDAO.insertBoard(vo); //여러분들은 주석처리 할 필요 없음!!
+			//grp값 등록
+			BoardDAO.updGrp();
+		}
+		
+		
 		response.sendRedirect("list");
 	}
 
