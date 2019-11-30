@@ -176,6 +176,10 @@ public class BoardDAO {
 
 		return vo;
 	}
+	
+	
+	
+	
 
 	// 글삭제
 	public static int delBoard(BoardVO param) {
