@@ -12,6 +12,7 @@ import java.util.List;
 import com.doheum.sb.vo.BoardVO;
 import com.doheum.sb.vo.CommentVO;
 import com.doheum.sb.vo.FavoriteVO;
+import com.doheum.sb.vo.PrevNextVO;
 
 public class BoardDAO {	
 	// 글쓰기
@@ -97,7 +98,7 @@ public class BoardDAO {
 		return list;
 	}
 	
-	public static int getTotalPagingCnt(int showCnt) {
+	public static int getTotalPagingCnt(final int showCnt) {
 		int result = 0;
 		
 		Connection con = null;
@@ -128,7 +129,7 @@ public class BoardDAO {
 	}
 
 	// 글 디테일 가져오기
-	public static BoardVO getBoardDetail(BoardVO param) {
+	public static BoardVO getBoardDetail(final BoardVO param) {
 		BoardVO vo = new BoardVO();
 		String query = " SELECT A.*, B.nm, IFNULL(C.i_board, 0) AS favorite " + 
 				" FROM t_board A " + 
@@ -178,7 +179,35 @@ public class BoardDAO {
 	}
 	
 	
-	
+	public static PrevNextVO getPrevNext(final BoardVO param) {
+		PrevNextVO vo = null;
+		
+		String sql = " SELECT (SELECT ifnull(MAX(i_board), 0) FROM t_board WHERE i_board < ?) as next " +				
+				" , (SELECT ifnull(MIN(i_board), 0) FROM t_board WHERE i_board > ?) as prev FROM dual ";
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			con = getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, param.getI_board());
+			ps.setInt(2, param.getI_board());
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				int prev = rs.getInt("prev");
+				int next = rs.getInt("next");
+				vo = new PrevNextVO(prev, next);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(con, ps, rs);
+		}
+		
+		return vo;
+	}
 	
 
 	// 글삭제

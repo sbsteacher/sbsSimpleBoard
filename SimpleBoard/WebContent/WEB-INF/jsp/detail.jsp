@@ -8,6 +8,7 @@
 	List<CommentVO> cmtList = (List<CommentVO>) request.getAttribute("cmtList");
 	
 	UserVO loginUser = (UserVO)session.getAttribute("loginUser");
+	PrevNextVO pnvo = (PrevNextVO)request.getAttribute("pnvo"); 
 %>
 <style>	
 	table {
@@ -73,7 +74,19 @@
 		</tr>
 		<% } %>
 	</table>	
-	<div>
+	
+	<div class="mt-30">
+		<% if(pnvo.getPrev() > 0)  {%>
+			<a href="detail?i_board=<%=pnvo.getPrev()%>"><button>이전글</button></a>
+		<% } %>
+		
+		<% if(pnvo.getNext() > 0)  {%>
+			<a href="detail?i_board=<%=pnvo.getNext()%>"><button>다음글</button></a>
+		<% } %>
+	</div>
+	
+	
+	<div class="mt-30">
 		<!-- action을 생략하면 현재 주소창에 적혀있는 주소로 post를 날립니다. -->
 		<form method="post" id="frm" onsubmit="return check()">
 			<input type="hidden" name="i_comment" value="0">

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import com.doheum.sb.dao.BoardDAO;
 import com.doheum.sb.vo.BoardVO;
 import com.doheum.sb.vo.CommentVO;
+import com.doheum.sb.vo.PrevNextVO;
 import com.doheum.sb.vo.UserVO;
 
 @WebServlet("/detail")
@@ -54,6 +55,9 @@ public class BoardDetailServlet extends LoginNeedServlet {
 				
 		BoardVO vo = BoardDAO.getBoardDetail(param);
 		request.setAttribute("vo", vo);
+		
+		PrevNextVO pnvo = BoardDAO.getPrevNext(param);
+		request.setAttribute("pnvo", pnvo);
 		
 		request.setAttribute("title", "디테일");
 		request.setAttribute("target", "detail");

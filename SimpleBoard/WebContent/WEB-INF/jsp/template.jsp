@@ -61,6 +61,14 @@ footer {
 	height: 30px;
 }
 
+.mt-30 {
+	margin-top: 30px;
+}
+
+table {
+	width: 70%;
+}
+
 </style>
 </head>
 <body>
