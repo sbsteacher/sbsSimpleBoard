@@ -25,9 +25,12 @@ public class BoardDAO {
 		try {
 			con = getCon();
 			ps = con.prepareStatement(query);
-			ps.setString(1, vo.getTitle());
-			ps.setString(2, vo.getContent());
-			ps.setString(3, vo.getUid());
+			ps.setInt(1, vo.getGrp());
+			ps.setInt(2, vo.getSeq());
+			ps.setInt(3,  vo.getFloor());
+			ps.setString(4, vo.getTitle());
+			ps.setString(5, vo.getContent());
+			ps.setString(6, vo.getUid());
 			
 			result = ps.executeUpdate();
 
@@ -57,13 +60,35 @@ public class BoardDAO {
 			close(con, ps);
 		}
 	}
+	
+	public static void updSeq(BoardVO vo) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		String sql = " UPDATE t_board "
+				+ " SET seq = seq + 1 "
+				+ " WHERE grp = ? and seq >= ? ";
+		
+		try {
+			con = getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1,  vo.getGrp());
+			ps.setInt(2, vo.getSeq());
+			ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(con, ps);
+		}
+	}
 
 	// 글 리스트 가져오기
 	public static List<BoardVO> getBoardList(int sIdx, int showCnt) {
 		List<BoardVO> list = new ArrayList();
 		
-		String query = " SELECT " + 
-				"  A.i_board, A.title, A.regdatetime, A.cnt, C.nm " + 
+		String query = " SELECT A.grp, A.seq, A.floor " + 
+				" , A.i_board, A.title, A.regdatetime, A.cnt, C.nm " + 
 				" , ifnull(B.cnt, 0) as favorite_cnt " + 
 				" FROM t_board A " + 
 				" LEFT JOIN ( " + 
@@ -74,7 +99,7 @@ public class BoardDAO {
 				" ON A.i_board = B.i_board " + 
 				" INNER JOIN t_user C " + 
 				" ON A.uid = C.uid " + 
-				" ORDER BY A.i_board DESC " +
+				" ORDER BY A.grp DESC, seq, floor " +
 				" LIMIT ?, ? ";
 
 		Connection con = null;
@@ -91,6 +116,9 @@ public class BoardDAO {
 			while (rs.next()) {
 				BoardVO vo = new BoardVO();
 				int i_board = rs.getInt("i_board");
+				int grp = rs.getInt("grp");
+				int seq = rs.getInt("seq");
+				int floor = rs.getInt("floor");
 				String title = rs.getString("title");
 				String regDateTime = rs.getString("regdatetime");
 				int cnt = rs.getInt("cnt");
@@ -98,6 +126,9 @@ public class BoardDAO {
 				int favorite = rs.getInt("favorite_cnt");
 				
 				vo.setI_board(i_board);
+				vo.setGrp(grp);
+				vo.setSeq(seq);
+				vo.setFloor(floor);
 				vo.setTitle(title);
 				vo.setRegDateTime(regDateTime);
 				vo.setCnt(cnt);

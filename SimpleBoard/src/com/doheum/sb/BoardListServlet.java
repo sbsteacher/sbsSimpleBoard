@@ -17,7 +17,8 @@ import com.doheum.sb.vo.UserVO;
 
 @WebServlet("/list")
 public class BoardListServlet extends LoginNeedServlet {
-	private static final long serialVersionUID = 1L;     
+	private static final long serialVersionUID = 1L;   
+	final int showCnt = 10;
   	
 	@Override
 	protected void doGetProc(HttpServletRequest request, HttpServletResponse response)
@@ -43,7 +44,7 @@ public class BoardListServlet extends LoginNeedServlet {
 		session.setAttribute("p", page);
 		System.out.println("page : " + page);
 		 
-		int showCnt = 5;
+		
 		int sIdx = (page - 1) * showCnt;
 		List<BoardVO> list = BoardDAO.getBoardList(sIdx, showCnt);
 		request.setAttribute("data", list);		

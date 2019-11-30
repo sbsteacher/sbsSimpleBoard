@@ -68,7 +68,15 @@
 			%>
 				<tr class="content" onclick="goDetail(<%=vo.getI_board()%>, <%=p %>)">
 					<td><%=vo.getI_board() %></td>
-					<td><%=vo.getTitle() %></td>
+					<td>
+						<% if(vo.getFloor() > 0) { %>
+							<% for(int i=0; i<vo.getFloor(); i++)  {%>
+								&nbsp;&nbsp;
+							<% } %>
+							┖
+						<% } %>
+						<%=vo.getTitle() %>
+					</td>
 					<td><%=vo.getNm() %></td>
 					<td><%=vo.getRegDateTime() %></td>
 					<td class="center"><%=vo.getCnt() %></td>

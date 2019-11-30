@@ -48,14 +48,20 @@ public class BoardWriteServlet extends LoginNeedServlet {
 		HttpSession session = request.getSession();
 		UserVO loginUser = (UserVO)session.getAttribute("loginUser");
 		vo.setUid(loginUser.getUid());
-		vo.setGrp(Integer.parseInt(grp));
-		vo.setSeq(Integer.parseInt(seq));
-		vo.setFloor(Integer.parseInt(floor));
+		vo.setGrp(Integer.parseInt(grp));	
 		
-		if(grp.equals("0")) {
-			BoardDAO.insertBoard(vo); //여러분들은 주석처리 할 필요 없음!!
+		if(grp.equals("0")) {			
+			vo.setSeq(Integer.parseInt(seq));
+			vo.setFloor(Integer.parseInt(floor));
+			BoardDAO.insertBoard(vo);
 			//grp값 등록
 			BoardDAO.updGrp();
+		
+		} else { //답글
+			vo.setSeq(Integer.parseInt(seq) + 1);
+			vo.setFloor(Integer.parseInt(floor) + 1);
+			BoardDAO.updSeq(vo);
+			BoardDAO.insertBoard(vo);
 		}
 		
 		
@@ -63,6 +69,7 @@ public class BoardWriteServlet extends LoginNeedServlet {
 	}
 
 }
+
 
 
 
