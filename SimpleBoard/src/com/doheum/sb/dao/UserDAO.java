@@ -86,10 +86,10 @@ public class UserDAO {
 		} finally {
 			close(con, ps, rs);
 		}
-		
-		
 		return result;
 	}
+	
+
 }
 
 
